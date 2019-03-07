@@ -14,13 +14,6 @@ var veer = function(u, l, c) {
 };
 var left = false;
 
-// number of tries for veer calculation
-var tries = 10;
-// useful for veer computation
-var overallDirection = 0;
-// error tolerance for veer computation
-var tolerance = 1;
-
 // drift values for average
 var speedVector = new Array();
 var directionVector = new Array();
@@ -89,39 +82,6 @@ function computeAverage(array) {
         pSum += value;
     });
     return Math.fixedDecimals(pSum / array.length, 2);
-}
-
-// determine the veer direction
-function determineVeer() {
-    // decide in wich direction the boat 
-    // is turning
-    if(tries > 0) {
-        overallDirection += uheading() - heading();
-
-        tries -= 1;
-
-        setTimeout(determineVeer, delay);
-    } else {
-        console.log((overallDirection/10));
-
-        if(overallDirection/10 > tolerance) {
-            left = true;
-            veer = function(u, l, c) {
-                return u < l && u >= c;
-            }
-            console.log('\nTurning left');
-        } else if(overallDirection/10 < -tolerance) {
-            left = false;
-            veer = function(u, l, c) {
-                return u > l && u <= c;
-            }
-            console.log('\nTurning right');
-        } else {
-            stopDriftTest(true);
-            left = false;
-            console.log('\nNot turning');
-        }
-    }
 }
 
 // manage the drift calculation

@@ -15,6 +15,7 @@
     <script src="javascript/updating.js"></script>
     <script src="javascript/resize.js"></script>
     <script src="javascript/operations.js"></script>
+    <script src="javascript/veermonitor.js"></script>
     <script type="text/JavaScript">
         // initialize buttons and canvas
         $(document).ready(function(){
