@@ -8,12 +8,6 @@ var usefulTimestamp = -1;
 var usog = 0, ucog = 0, umh = 0, usow = 0
     ulat = 0.0, ulon = 0.0;
 
-// veer direction
-var veer = function(u, l, c) {
-    return false;
-};
-var left = false;
-
 // drift values for average
 var speedVector = new Array();
 var directionVector = new Array();
