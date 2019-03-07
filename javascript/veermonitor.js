@@ -1,3 +1,9 @@
+// veer direction
+var veer = function(u, l, c) {
+    return false;
+};
+var left = false;
+
 // number of tries for veer calculation
 var tries = 10;
 // useful for veer computation
