@@ -36,6 +36,10 @@ function updatingData(){
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
+          if(testType == 'drift' && started)
+            stopDriftTest(true);
+          else if(testType == 'delta' && started)
+            stopDeltaTest(true);
       },
       
       // complete connection

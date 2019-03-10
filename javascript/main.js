@@ -4,6 +4,7 @@
 
 // test state
 var started = false;
+var testType = 'none';
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
@@ -52,20 +53,30 @@ function refreshInformations() {
 // stop test
 function stopDriftTest(aborted) {
     console.log("drift check stopped");
-    started = !started;
+    started = false;
     $('#drift').text('FIND DRIFT');
+    testType = 'none';
     // activate the correction button if
     // operation not aborted
-    if(!aborted)
+    if(!aborted) {
         $('#correction').prop("disabled",false);
+    } else {
+        // make aborted message visible
+        $('#aborted').attr("hidden", false);
+    }
 }
 
-function stopDeltaTest() {
+function stopDeltaTest(aborted) {
     console.log("correction check stopped");
-    started = !started;
+    started = false;
     $('#correction').text('FIND DELTA');
     // activate the drift button
     $('#drift').prop("disabled",false);
+    testType = 'none';
+    if(aborted) {
+        // make aborted message visible
+        $('#aborted').attr("hidden", false);
+    }
 }
 
 // verify if checkbox is checked
@@ -81,10 +92,20 @@ function checkChecked() {
 
 (function($){
     $(document).ready(function(){
+        resizeWindow();
+          
+        $('#correction').prop("disabled",true);
+        compass(0, 'ch', '.left.top', 0);
+
+        updatingData();
+
         // add listeners to buttons
         $('#drift').on("click", findDrift);
         $('#correction').on("click", findCorrections);
         $('#gpsh').on("click", checkChecked);
+        $('#abortedbtn').on("click", function() {
+            $('#aborted').attr("hidden", true);
+        });
     });
 
     // drift button clicked
@@ -93,7 +114,8 @@ function checkChecked() {
             console.log("drift check started");
             $('#correction').prop("disabled",true);
             $('#drift').text('STOP');
-            started = !started;
+            started = true;
+            testType = 'drift';
             // calculate the drift
             reset();
             driftCalcUpdater();
@@ -108,16 +130,17 @@ function checkChecked() {
             console.log("correction check started");
             $('#drift').prop("disabled",true);
             $('#correction').text('STOP');
-            started = !started;
+            started = true;
+            testType = 'delta';
             // calculate corrections
             if(driftSpeed != null && driftDirection != null) {
                 reset();
                 correctionCalcUpdater();
             } else {
-                stopDeltaTest();
+                stopDeltaTest(true);
             }
         } else {
-            stopDeltaTest();
+            stopDeltaTest(false);
         }
     }
 })(jQuery);
