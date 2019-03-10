@@ -15,7 +15,7 @@ var dataTimestamp = 0;
 var sog = 0, cog = 0, mh = 0, sow = 0,
     lat = 0.0, lon = 0.0;
 
-var delay = 1000, factor = 5;
+const delay = 1000, factor = 5;
 
 // drift direction and speed
 var driftDirection = null, driftSpeed = null;
@@ -76,6 +76,7 @@ function stopDeltaTest(aborted) {
     if(aborted) {
         // make aborted message visible
         $('#aborted').attr("hidden", false);
+        $('#correction').prop("disabled",true);
     }
 }
 
@@ -90,6 +91,20 @@ function checkChecked() {
 
 //////////////////////////////////////
 
+// find get parameters from url
+// (used for passing the fast forward time)
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = { }, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
+
 (function($){
     $(document).ready(function(){
         resizeWindow();
@@ -97,6 +112,16 @@ function checkChecked() {
         $('#correction').prop("disabled",true);
         compass(0, 'ch', '.left.top', 0);
 
+        var query = getQueryParams(document.location.search);
+
+        // start updating data 
+        // fast forwarding with get parameter 't'
+        $('#drift').prop("disabled",true);
+        if(query.t != undefined)
+            jumpTo = query.t;
+        else
+            jumpTo = 0;
+          
         updatingData();
 
         // add listeners to buttons
