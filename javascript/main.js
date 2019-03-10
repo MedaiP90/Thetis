@@ -81,6 +81,13 @@ function checkChecked() {
 
 (function($){
     $(document).ready(function(){
+        resizeWindow();
+          
+        $('#correction').prop("disabled",true);
+        compass(0, 'ch', '.left.top', 0);
+
+        updatingData();
+
         // add listeners to buttons
         $('#drift').on("click", findDrift);
         $('#correction').on("click", findCorrections);
