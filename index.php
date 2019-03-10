@@ -17,17 +17,7 @@
     <script src="javascript/operations.js"></script>
     <script src="javascript/veermonitor.js"></script>
     <script type="text/JavaScript">
-        // initialize buttons and canvas
-        $(document).ready(function(){
-            $('#correction').prop("disabled",true);
-            compass(0, 'ch', '.left.top', 0);
-        });
         (function($){
-            // resizing function and data aquiring 
-            $(document).ready(function(){
-              resizeWindow();
-              updatingData();
-            });
             // page resizing activates this function
             $(window).resize(function(){
               resizeWindow();
@@ -41,6 +31,7 @@
             include 'top.php';
         ?>
     </div>
+
     <table id="contenuto">
       <tr>
         <td class="left top">
@@ -63,6 +54,11 @@
         </td>
       </tr>
     </table>
+
+    <div id="aborted" class="msg" hidden>
+        <div class="name" id="abortedtxt">OPERATION ABORTED</div>
+        <div id="abortedbtn"><button>OK</button></div>
+    </div>
 
     <div id="bottom">
         <?php

@@ -1,6 +1,10 @@
 // server address
 const myurl = "server/server.php";
 
+// useful for fast forwarding
+var fakeDelay = 1;
+var jumpTo = -1;
+
 // data update function
 function updatingData(){
     $.ajax({
@@ -36,6 +40,10 @@ function updatingData(){
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
+          if(testType == 'drift' && started)
+            stopDriftTest(true);
+          else if(testType == 'delta' && started)
+            stopDeltaTest(true);
       },
       
       // complete connection
@@ -43,7 +51,16 @@ function updatingData(){
           // console.log("complete : " + textStatus);
       }
     });
+
+    // manage the fast forwarding
+    if(jumpTo > 0) {
+      jumpTo -= 1;
+    } else if(jumpTo > -1) {
+      fakeDelay = delay;
+      $('#drift').prop("disabled",false);
+      jumpTo -= 1;
+    }
     
     // time for data refresh
-    setTimeout(updatingData, delay);
+    setTimeout(updatingData, fakeDelay);
 }

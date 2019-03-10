@@ -20,6 +20,7 @@ function resizeWindow() {
     $('#contenuto').height(contHeight).width(width);
     $('#top_content').height(marginVer).width(width);
     $('#bottom_content').height(marginVer).width(width);
+    $('.msg').width(contHeight);
     $('.lefter').width(cellWidth).height(marginVer);
     $('.midler').width(cellWidth).height(marginVer);
     $('.rigter').width(cellWidth).height(marginVer);
@@ -50,5 +51,14 @@ function resizeWindow() {
     });
     $('#correction').css({
         left: 0
+    });
+    $('.msg').css({
+        position: 'absolute',
+        top: parseInt(height / 2) - parseInt($('#aborted').height() / 2),
+        left: parseInt(width / 2) - parseInt(contHeight / 2)
+    });
+    $('#abortedbtn').css({
+        position: 'relative',
+        left: parseInt(contHeight / 2) - parseInt(linksWidth / 2)
     });
 }
