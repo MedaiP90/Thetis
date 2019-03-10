@@ -1,4 +1,4 @@
-var RADIUS = 6372.795477598 // earth radius
+const RADIUS = 6372.795477598 // earth radius
 
 // degrees to radians
 Math.radians = function(deg){
