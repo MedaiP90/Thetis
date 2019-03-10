@@ -20,6 +20,7 @@ function resizeWindow() {
     $('#contenuto').height(contHeight).width(width);
     $('#top_content').height(marginVer).width(width);
     $('#bottom_content').height(marginVer).width(width);
+    $('#aborted').height(contHeight).width(contHeight);
     $('.lefter').width(cellWidth).height(marginVer);
     $('.midler').width(cellWidth).height(marginVer);
     $('.rigter').width(cellWidth).height(marginVer);

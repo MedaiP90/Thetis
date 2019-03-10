@@ -56,8 +56,11 @@ function stopDriftTest(aborted) {
     $('#drift').text('FIND DRIFT');
     // activate the correction button if
     // operation not aborted
-    if(!aborted)
+    if(!aborted) {
         $('#correction').prop("disabled",false);
+        // make aborted message visible
+        $('#aborted').attr("hidden", false);
+    }
 }
 
 function stopDeltaTest() {
@@ -92,6 +95,9 @@ function checkChecked() {
         $('#drift').on("click", findDrift);
         $('#correction').on("click", findCorrections);
         $('#gpsh').on("click", checkChecked);
+        $('#abortedbtn').on("click", function() {
+            $('#aborted').attr("hidden", true);
+        });
     });
 
     // drift button clicked

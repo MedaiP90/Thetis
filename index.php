@@ -31,6 +31,12 @@
             include 'top.php';
         ?>
     </div>
+
+    <div id="aborted" style="background-color: white;" hidden>
+        <div class="name">OPERATION ABORTED</div>
+        <div><button id="abortedbtn">OK</button></div>
+    </div>
+
     <table id="contenuto">
       <tr>
         <td class="left top">
