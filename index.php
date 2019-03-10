@@ -32,11 +32,6 @@
         ?>
     </div>
 
-    <div id="aborted" style="background-color: white;" hidden>
-        <div class="name">OPERATION ABORTED</div>
-        <div><button id="abortedbtn">OK</button></div>
-    </div>
-
     <table id="contenuto">
       <tr>
         <td class="left top">
@@ -59,6 +54,11 @@
         </td>
       </tr>
     </table>
+
+    <div id="aborted" class="msg" hidden>
+        <div class="name" id="abortedtxt">OPERATION ABORTED</div>
+        <div id="abortedbtn"><button>OK</button></div>
+    </div>
 
     <div id="bottom">
         <?php

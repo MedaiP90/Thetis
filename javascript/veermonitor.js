@@ -15,13 +15,13 @@ var tolerance = 1;
 function determineVeer() {
     // decide in wich direction the boat 
     // is turning
-    if(tries > 0) {
+    if(tries > 0 && started) {
         overallDirection += uheading() - heading();
 
         tries -= 1;
 
         setTimeout(determineVeer, delay);
-    } else {
+    } else if(started) {
         console.log((overallDirection/10));
 
         if(overallDirection/10 > tolerance) {
