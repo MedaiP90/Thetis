@@ -140,7 +140,7 @@ function correctionCalcUpdater() {
         compassVector.push(cd);
         logVector.push(ld);
 
-        updateDeltaInfo(cd, ld);
+        updateDeltaInfo(Math.trunc(cd), ld);
 
         // repeat the survey every 'factor' seconds
         setTimeout(correctionCalcUpdater, delay*factor);
@@ -150,7 +150,7 @@ function correctionCalcUpdater() {
             compassDelta = computeAverage(compassVector);
             logDelta = computeAverage(logVector);
 
-            updateDeltaInfo(compassDelta, logDelta);
+            updateDeltaInfo(Math.trunc(compassDelta), logDelta);
         }
     }
 }
