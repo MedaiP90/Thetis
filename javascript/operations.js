@@ -49,13 +49,8 @@ function reset() {
     lastTimestamp = -1;
     lsog = 0, lcog = 0, lmh = 0;
     lsow = 0, llat = 0.0, llon = 0.0;
-    
-    veer = function(u, l, c) {
-        return false;
-    };
-    left = false;
-    tries = 10;
-    overallDirection = 0;
+
+    resetAngularSpeeds();
 }
 
 function storeUseful() {
@@ -85,8 +80,13 @@ function driftCalcUpdater() {
             if(usefulTimestamp == -1) {
                 storeUseful()
                 $('#rh').text(uheading() + '°' + label);
-                determineVeer();
+
+                previousHeading = heading();
+                setTimeout(veerMonitor, delay*factor);
             } else {
+                // constantly get the veer direction
+                determineVeer();
+
                 // decide if the new data is useful or not
                 if(veer(uheading(), lheading(), heading())) {
                     var speed = getDriftSpeed(ulat, ulon, usefulTimestamp,
