@@ -42,26 +42,26 @@ function determineVeer() {
         }
         if(Math.sign(angularSpeed) != Math.sign(avg)) {
             // different directions
-            console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
-            stopDriftTest(true);
+            //console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
+            stopDriftTest(true, "Not turning properly");
         } else if(angularSpeed > avg + error || angularSpeed < avg - error) {
             // the veer radius is changed too much
-            console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
-            stopDriftTest(true);
+            //console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
+            stopDriftTest(true, "Not mantaining a constant radius");
         } else {
             if(avg < 0 + error/4 && avg > 0 - error/4) {
                 // not turning
-                console.log("Not turning (avg = " + avg + ")");
-                stopDriftTest(true);
+                //console.log("Not turning (avg = " + avg + ")");
+                stopDriftTest(true, "Not turning");
             } else if(angularSpeed < 0) {
                 // turning left
-                console.log("Turning left (avg = " + avg + ")");
+                //console.log("Turning left (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u < l && u >= c;
                 }
             } else {
                 // turning right
-                console.log("Turning right (avg = " + avg + ")");
+                //console.log("Turning right (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u > l && u <= c;
                 }

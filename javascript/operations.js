@@ -103,9 +103,8 @@ function driftCalcUpdater() {
             // store the data as last if valid
             // (not corrupted by waves action)
             var diff = heading() - lheading();
-            console.log("(avg = " + avg + ", diff = " + diff + ")");
             if(avg == null || Math.sign(diff) == Math.sign(avg)
-                || avg == 0) {
+                || avg == 0 || Math.abs(diff) > 270) {
                 lastTimestamp = dataTimestamp;
                 lsog = sog;
                 lcog = cog;

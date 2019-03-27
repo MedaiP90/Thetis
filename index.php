@@ -58,6 +58,7 @@
 
     <div id="aborted" class="msg" hidden>
         <div class="name" id="abortedtxt">OPERATION ABORTED</div>
+        <div id="abortedmsg"></div>
         <div id="abortedbtn"><button>OK</button></div>
     </div>
 
