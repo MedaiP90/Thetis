@@ -91,7 +91,7 @@ function veerMonitor() {
         // remove the erroneous results around
         // zero degrees
         if(Math.abs(diff) < 270) {
-            angularSpeedsTmp.push(diff/timeout);
+            angularSpeedsTmp.push(diff/factor);
         }
 
         tries -= 1;
