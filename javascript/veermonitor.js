@@ -48,7 +48,7 @@ function determineVeer() {
             console.log("(avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
         } else {
-            if(avg < 0 + error/2 && avg > 0 - error/2) {
+            if(avg < 0 + error/4 && avg > 0 - error/4) {
                 // not turning
                 console.log("Not turning (avg = " + avg + ")");
                 stopDriftTest(true);
