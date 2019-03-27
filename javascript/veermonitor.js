@@ -11,7 +11,7 @@ var veer = function(u, l, c) {
 // angular speeds
 var angularSpeeds = new Array(),
     angularSpeedsTmp = new Array();
-var angularSpeed = null;
+var angularSpeed = null, avg = null;
 
 // value count
 var tries = maxTries;
@@ -36,9 +36,9 @@ function resetAngularSpeeds() {
 function determineVeer() {
     if(angularSpeed != null) {
         if(angularSpeeds.length > 0) {
-            var avg = computeAverage(angularSpeeds);
+            avg = computeAverage(angularSpeeds);
         } else {
-            var avg = angularSpeed;
+            avg = angularSpeed;
         }
         if(Math.sign(angularSpeed) != Math.sign(avg)) {
             // different directions

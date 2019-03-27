@@ -102,8 +102,10 @@ function driftCalcUpdater() {
 
             // store the data as last if valid
             // (not corrupted by waves action)
-            if(angularSpeed == null || 
-                Math.sign(heading() - lheading()) == Math.sign(angularSpeed)) {
+            var diff = heading() - lheading();
+            console.log("(avg = " + avg + ", diff = " + diff + ")");
+            if(avg == null || Math.sign(diff) == Math.sign(avg)
+                || avg == 0) {
                 lastTimestamp = dataTimestamp;
                 lsog = sog;
                 lcog = cog;
