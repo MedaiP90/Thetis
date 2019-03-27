@@ -83,10 +83,9 @@ function driftCalcUpdater() {
 
                 previousHeading = heading();
                 setTimeout(veerMonitor, timeout);
-            } else {
                 // constantly get the veer direction
                 determineVeer();
-
+            } else {
                 // decide if the new data is useful or not
                 if(veer(uheading(), lheading(), heading())) {
                     var speed = getDriftSpeed(ulat, ulon, usefulTimestamp,

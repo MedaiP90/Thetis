@@ -68,6 +68,10 @@ function determineVeer() {
             }
         }
     }
+    
+    if(started) {
+        setTimeout(determineVeer, timeout*(maxTries + 1));
+    }
 }
 
 // observe the veer and calculate the
