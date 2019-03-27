@@ -82,7 +82,7 @@ function driftCalcUpdater() {
                 $('#rh').text(uheading() + '°' + label);
 
                 previousHeading = heading();
-                setTimeout(veerMonitor, delay*factor);
+                setTimeout(veerMonitor, timeout);
             } else {
                 // constantly get the veer direction
                 determineVeer();

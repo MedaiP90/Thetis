@@ -1,6 +1,7 @@
 const maxTries = 5; // values before angular speed average computation
 const error = 2; // angular speed error tolerance 
                  // avg - error < angularSpeed < avg + error
+const timeout = delay*factor; // time between surveys
 
 // veer direction
 var veer = function(u, l, c) {
@@ -41,11 +42,11 @@ function determineVeer() {
         }
         if(angularSpeed < 0 && avg > 0) {
             // different directions
-            console.log("(avg = " + avg + ", as = " + angularSpeed + ")");
+            console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
-        } else if(angularSpeed < avg + error && angularSpeed > avg - error) {
+        } else if(angularSpeed > avg + error || angularSpeed < avg - error) {
             // the veer radius is changed too much
-            console.log("(avg = " + avg + ", as = " + angularSpeed + ")");
+            console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
         } else {
             if(avg < 0 + error/4 && avg > 0 - error/4) {
@@ -54,13 +55,13 @@ function determineVeer() {
                 stopDriftTest(true);
             } else if(angularSpeed < 0) {
                 // turning left
-                console.log("Turning left");
+                console.log("Turning left (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u < l && u >= c;
                 }
             } else {
                 // turning right
-                console.log("Turning right");
+                console.log("Turning right (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u > l && u <= c;
                 }
@@ -90,10 +91,10 @@ function veerMonitor() {
         // remove the erroneous results around
         // zero degrees
         if(Math.abs(diff) < 270) {
-            angularSpeedsTmp.push(diff);
+            angularSpeedsTmp.push(diff/timeout);
         }
 
         tries -= 1;
-        setTimeout(veerMonitor, delay*factor);
+        setTimeout(veerMonitor, timeout);
     }
 }
