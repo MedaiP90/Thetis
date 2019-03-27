@@ -41,14 +41,16 @@ function determineVeer() {
         }
         if(angularSpeed < 0 && avg > 0) {
             // different directions
+            console.log("(avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
         } else if(angularSpeed < avg + error && angularSpeed > avg - error) {
             // the veer radius is changed too much
+            console.log("(avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
         } else {
             if(avg < 0 + error/2 && avg > 0 - error/2) {
                 // not turning
-                console.log("Not turning");
+                console.log("Not turning (avg = " + avg + ")");
                 stopDriftTest(true);
             } else if(angularSpeed < 0) {
                 // turning left
