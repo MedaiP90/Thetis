@@ -63,6 +63,8 @@ function stopDriftTest(aborted) {
     } else {
         // make aborted message visible
         $('#aborted').attr("hidden", false);
+        // drop unaccurate results
+        driftDirection = null, driftSpeed = null;
     }
 }
 

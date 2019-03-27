@@ -101,7 +101,9 @@ function driftCalcUpdater() {
             }
 
             // store the data as last if valid
-            //if(left == null || (left && cog <= lcog) || (!left && cog >= lcog)) {
+            // (not corrupted by waves action)
+            if(angularSpeed == null || 
+                Math.sign(heading() - lheading()) == Math.sign(angularSpeed)) {
                 lastTimestamp = dataTimestamp;
                 lsog = sog;
                 lcog = cog;
@@ -109,7 +111,7 @@ function driftCalcUpdater() {
                 lsow = sow;
                 llat = lat;
                 llon = lon;
-            //} 
+            } 
         }
 
         // repeat the survey

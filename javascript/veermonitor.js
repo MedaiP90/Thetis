@@ -40,7 +40,7 @@ function determineVeer() {
         } else {
             var avg = angularSpeed;
         }
-        if(angularSpeed < 0 && avg > 0) {
+        if(Math.sign(angularSpeed) != Math.sign(avg)) {
             // different directions
             console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
             stopDriftTest(true);
