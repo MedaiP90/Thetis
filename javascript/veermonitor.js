@@ -48,14 +48,17 @@ function determineVeer() {
         } else {
             if(avg < 0 + error/2 && avg > 0 - error/2) {
                 // not turning
+                console.log("Not turning");
                 stopDriftTest(true);
             } else if(angularSpeed < 0) {
                 // turning left
+                console.log("Turning left");
                 veer = function(u, l, c) {
                     return u < l && u >= c;
                 }
             } else {
                 // turning right
+                console.log("Turning right");
                 veer = function(u, l, c) {
                     return u > l && u <= c;
                 }
