@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="author" content="Leonardo Cossutta">
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/buttons.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/content.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
@@ -57,6 +58,7 @@
 
     <div id="aborted" class="msg" hidden>
         <div class="name" id="abortedtxt">OPERATION ABORTED</div>
+        <div id="abortedmsg"></div>
         <div id="abortedbtn"><button>OK</button></div>
     </div>
 

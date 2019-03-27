@@ -49,13 +49,8 @@ function reset() {
     lastTimestamp = -1;
     lsog = 0, lcog = 0, lmh = 0;
     lsow = 0, llat = 0.0, llon = 0.0;
-    
-    veer = function(u, l, c) {
-        return false;
-    };
-    left = false;
-    tries = 10;
-    overallDirection = 0;
+
+    resetAngularSpeeds();
 }
 
 function storeUseful() {
@@ -85,6 +80,10 @@ function driftCalcUpdater() {
             if(usefulTimestamp == -1) {
                 storeUseful()
                 $('#rh').text(uheading() + '°' + label);
+
+                previousHeading = heading();
+                setTimeout(veerMonitor, timeout);
+                // constantly get the veer direction
                 determineVeer();
             } else {
                 // decide if the new data is useful or not
@@ -102,7 +101,10 @@ function driftCalcUpdater() {
             }
 
             // store the data as last if valid
-            //if(left == null || (left && cog <= lcog) || (!left && cog >= lcog)) {
+            // (not corrupted by waves action)
+            var diff = heading() - lheading();
+            if(avg == null || Math.sign(diff) == Math.sign(avg)
+                || avg == 0 || Math.abs(diff) > 270) {
                 lastTimestamp = dataTimestamp;
                 lsog = sog;
                 lcog = cog;
@@ -110,7 +112,7 @@ function driftCalcUpdater() {
                 lsow = sow;
                 llat = lat;
                 llon = lon;
-            //} 
+            } 
         }
 
         // repeat the survey

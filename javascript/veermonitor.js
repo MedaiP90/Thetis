@@ -1,45 +1,104 @@
+const maxTries = 5; // values before angular speed average computation
+const error = 2; // angular speed error tolerance 
+                 // avg - error < angularSpeed < avg + error
+const timeout = delay*factor; // time between surveys
+
 // veer direction
 var veer = function(u, l, c) {
     return false;
-};
-var left = false;
+}
 
-// number of tries for veer calculation
-var tries = 10;
-// useful for veer computation
-var overallDirection = 0;
-// error tolerance for veer computation
-var tolerance = 1;
+// angular speeds
+var angularSpeeds = new Array(),
+    angularSpeedsTmp = new Array();
+var angularSpeed = null, avg = null;
 
-// determine the veer direction
+// value count
+var tries = maxTries;
+
+// previous heading difference calculation
+var previousHeading = 0;
+
+function resetAngularSpeeds() {
+    veer = function(u, l, c) {
+        return false;
+    };
+
+    tries = maxTries;
+    angularSpeed = null;
+
+    angularSpeeds = new Array();
+    angularSpeedsTmp = new Array();
+}
+
+// compute the veer direction 
+// (veer function)
 function determineVeer() {
-    // decide in wich direction the boat 
-    // is turning
-    if(tries > 0 && started) {
-        overallDirection += uheading() - heading();
+    if(angularSpeed != null) {
+        if(angularSpeeds.length > 0) {
+            avg = computeAverage(angularSpeeds);
+        } else {
+            avg = angularSpeed;
+        }
+        if(Math.sign(angularSpeed) != Math.sign(avg)) {
+            // different directions
+            //console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
+            stopDriftTest(true, "Not turning properly");
+        } else if(angularSpeed > avg + error || angularSpeed < avg - error) {
+            // the veer radius is changed too much
+            //console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
+            stopDriftTest(true, "Not mantaining a constant radius");
+        } else {
+            if(avg < 0 + error/4 && avg > 0 - error/4) {
+                // not turning
+                //console.log("Not turning (avg = " + avg + ")");
+                stopDriftTest(true, "Not turning");
+            } else if(angularSpeed < 0) {
+                // turning left
+                //console.log("Turning left (avg = " + avg + ")");
+                veer = function(u, l, c) {
+                    return u < l && u >= c;
+                }
+            } else {
+                // turning right
+                //console.log("Turning right (avg = " + avg + ")");
+                veer = function(u, l, c) {
+                    return u > l && u <= c;
+                }
+            }
+        }
+    }
+    
+    if(started) {
+        setTimeout(determineVeer, timeout*(maxTries + 1));
+    }
+}
+
+// observe the veer and calculate the
+// instantaneous and average angular speeds
+function veerMonitor() {
+    if(started) {
+        if(tries == 0) {
+            if(angularSpeed != null) {
+                angularSpeeds.push(angularSpeed);
+            }
+            angularSpeed = computeAverage(angularSpeedsTmp);
+            angularSpeedsTmp = new Array();
+            tries = maxTries;
+        }
+
+        var actualHeading = heading();
+            diff = actualHeading - previousHeading;
+
+        previousHeading = actualHeading;
+
+        // remove the erroneous results around
+        // zero degrees
+        if(Math.abs(diff) < 270) {
+            angularSpeedsTmp.push(diff/factor);
+        }
 
         tries -= 1;
-
-        setTimeout(determineVeer, delay);
-    } else if(started) {
-        console.log((overallDirection/10));
-
-        if(overallDirection/10 > tolerance) {
-            left = true;
-            veer = function(u, l, c) {
-                return u < l && u >= c;
-            }
-            console.log('\nTurning left');
-        } else if(overallDirection/10 < -tolerance) {
-            left = false;
-            veer = function(u, l, c) {
-                return u > l && u <= c;
-            }
-            console.log('\nTurning right');
-        } else {
-            stopDriftTest(true);
-            left = false;
-            console.log('\nNot turning');
-        }
+        setTimeout(veerMonitor, timeout);
     }
 }

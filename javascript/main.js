@@ -51,7 +51,7 @@ function refreshInformations() {
 }
 
 // stop test
-function stopDriftTest(aborted) {
+function stopDriftTest(aborted, msg) {
     console.log("drift check stopped");
     started = false;
     $('#drift').text('FIND DRIFT');
@@ -62,7 +62,10 @@ function stopDriftTest(aborted) {
         $('#correction').prop("disabled",false);
     } else {
         // make aborted message visible
+        $('#abortedmsg').text(msg);
         $('#aborted').attr("hidden", false);
+        // drop unaccurate results
+        driftDirection = null, driftSpeed = null;
     }
 }
 
@@ -75,6 +78,7 @@ function stopDeltaTest(aborted) {
     testType = 'none';
     if(aborted) {
         // make aborted message visible
+        $('#abortedmsg').text(msg);
         $('#aborted').attr("hidden", false);
         $('#correction').prop("disabled",true);
     }
@@ -145,7 +149,7 @@ function getQueryParams(qs) {
             reset();
             driftCalcUpdater();
         } else {
-            stopDriftTest(false);
+            stopDriftTest(false, "");
         }
     }
 
@@ -162,10 +166,10 @@ function getQueryParams(qs) {
                 reset();
                 correctionCalcUpdater();
             } else {
-                stopDeltaTest(true);
+                stopDeltaTest(true, "No drift information");
             }
         } else {
-            stopDeltaTest(false);
+            stopDeltaTest(false, "");
         }
     }
 })(jQuery);
