@@ -147,6 +147,7 @@ function getQueryParams(qs) {
             testType = 'drift';
             // calculate the drift
             reset();
+            updateDriftInfo(0, 0);
             driftCalcUpdater();
         } else {
             stopDriftTest(false, "");
@@ -164,6 +165,7 @@ function getQueryParams(qs) {
             // calculate corrections
             if(driftSpeed != null && driftDirection != null) {
                 reset();
+                updateDeltaInfo(0, 0);
                 correctionCalcUpdater();
             } else {
                 stopDeltaTest(true, "No drift information");
