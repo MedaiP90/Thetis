@@ -69,7 +69,7 @@ function stopDriftTest(aborted, msg) {
     }
 }
 
-function stopDeltaTest(aborted) {
+function stopDeltaTest(aborted, msg) {
     console.log("correction check stopped");
     started = false;
     $('#correction').text('FIND DELTA');
