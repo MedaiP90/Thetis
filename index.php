@@ -14,6 +14,7 @@
     <script src="javascript/functions.js"></script>
     <script src="javascript/main.js"></script>
     <script src="javascript/updating.js"></script>
+    <script src="javascript/sending.js"></script>
     <script src="javascript/resize.js"></script>
     <script src="javascript/operations.js"></script>
     <script src="javascript/veermonitor.js"></script>

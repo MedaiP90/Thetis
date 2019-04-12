@@ -124,6 +124,7 @@ function driftCalcUpdater() {
             driftDirection = computeAverage(directionVector);
 
             updateDriftInfo(driftSpeed, Math.trunc(driftDirection));
+            sendDriftData(driftDirection, driftSpeed);
         }
     }
 }
