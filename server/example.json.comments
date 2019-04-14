@@ -16,8 +16,8 @@
   "togp" : -100,
  "data1" : -100,
  "data2" : 1.78,
- "drifth" : 140, // drift heading
- "drifts" : 0.55 // drift speed
+ "drifth" : -1.0, // drift heading (-1 if not calculated yet)
+ "drifts" : -1.0  // drift speed (-1 if not calculated yet)
 }
 
 /* Subtracting the result of the current calculation (gained from lat and lon)

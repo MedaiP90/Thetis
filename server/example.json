@@ -13,6 +13,6 @@
   "togp" : -100,
  "data1" : -100,
  "data2" : 1.78,
- "drifth" : 140,
- "drifts" : 0.55
+ "drifth" : -1.0,
+ "drifts" : -1.0
 }
