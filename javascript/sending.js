@@ -25,7 +25,7 @@ function sendDriftData(dhs, dss) {
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
-          stopDriftTest(true, textStatus);
+          // stopDriftTest(true, textStatus);
       },
       
       // complete connection
