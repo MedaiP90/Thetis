@@ -14,17 +14,18 @@ function sendDriftData(dhs, dss) {
       // access data
       success: function(data, textStatus, jqXHR){
           var json = JSON.parse(JSON.stringify(data));
-          console.log("connection success : " + json.status);
           if(json.status != "ok") {
+            stopDriftTest(true, "data sent, but status : " + json.status + ". retrying...");
             sendDriftData(dhs, dss);
+          } else {
+            console.log("data sent, status : " + json.status);
           }
       },
       
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
-          // sending error: retry until success
-          //sendDriftData(dhs, dss);
+          stopDriftTest(true, textStatus);
       },
       
       // complete connection
