@@ -4,11 +4,11 @@
   header('Access-Control-Allow-Credentials: false');
   header('Content-type: application/json; charset=utf-8');
   
-  $c = $_GET["command"];
-  $h = $_GET["dh"];
-  $s = $_GET["ds"];
+  $c = $_GET["cmd"];
+  $h = $_GET["data1"];
+  $s = $_GET["data2"];
 
-  $data = "{ \"command\" : \"$c\", \"dh\" : \"$h\", \"ds\" : \"$s\" }";
+  $data = "{ \"cmd\" : \"$c\", \"data1\" : \"$h\", \"data2\" : \"$s\" }";
   
 
   $host = "127.0.0.1";

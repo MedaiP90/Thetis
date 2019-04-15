@@ -14,5 +14,7 @@
  "data1" : -100,
  "data2" : 1.78,
  "drifth" : -1.0,
- "drifts" : -1.0
+ "drifts" : -1.0,
+ "deltas" : 0.00,
+ "deltab" : 0.00
 }
