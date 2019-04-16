@@ -29,4 +29,5 @@
 	border: 3px solid black; 
 	background-color: white; 
 	padding: 10px;
+	z-index: 5;
 }
