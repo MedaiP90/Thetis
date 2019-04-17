@@ -91,7 +91,7 @@ function driftCalcUpdater() {
                     directionVector.push(direc);
 
                     storeUseful();
-                    updateDriftInfo(speed, direc + '°');
+                    updateDriftInfo(speed, Math.trunc(direc) + '°');
                 }
             }
 
@@ -118,7 +118,7 @@ function driftCalcUpdater() {
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
 
-            updateDriftInfo(driftSpeed, driftDirection + '°');
+            updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
             sendDriftData(driftDirection, driftSpeed);
         }
     }
