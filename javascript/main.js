@@ -27,7 +27,7 @@ var driftDirection = null, driftSpeed = null;
 // update the drift fields
 function updateDriftInfo(speed, direc) {
     $('#cs').text(speed);
-    $('#ch').text(direc + '°');
+    $('#ch').text(direc);
 }
 
 // actual heading update
