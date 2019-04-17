@@ -40,6 +40,7 @@ function stopDriftTest(aborted, msg) {
     console.log("drift check stopped");
     started = false;
     $('#drift').text('FIND DRIFT');
+    $('#rh').text('--');
     // activate the correction button if
     // operation not aborted
     if(aborted) {
