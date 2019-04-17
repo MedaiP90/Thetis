@@ -1,30 +1,31 @@
 // server address
 const mycommandurl = "server/command_server.php";
 
-function sendDriftData(dhs, dss) {
+function sendDriftData(dh, ds) {
     $.ajax({
         // parameters to comunicate with the server
         url: mycommandurl,
         type:"GET",
         dataType: "json",
-        data: { command : "drift", dh : dhs, ds : dss },
+        data: { cmd : "drift", data1 : dh, data2 : ds },
         crossDomain: true,
         ContentType: "application/json",
         
       // access data
       success: function(data, textStatus, jqXHR){
           var json = JSON.parse(JSON.stringify(data));
-          console.log("connection success : " + json.status);
           if(json.status != "ok") {
-            sendDriftData(dhs, dss);
+            stopDriftTest(true, "data sent, but status : " + json.status + ". retrying...");
+            sendDriftData(dh, ds);
+          } else {
+            console.log("data sent, status : " + json.status);
           }
       },
       
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
-          // sending error: retry until success
-          //sendDriftData(dhs, dss);
+          // stopDriftTest(true, textStatus);
       },
       
       // complete connection

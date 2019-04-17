@@ -1,7 +1,7 @@
 <table id="top_content">
     <tr>
         <td class="lefter"><button class="test" id="drift">FIND DRIFT</button></td>
-        <td class="midler">Actual heading: <span id="ah">0</span><br>Ref. heading: <span id="rh">0</span></td>
-        <td class="rigter"><button class="test" id="correction">FIND DELTA</button></td>
+        <td class="midler"></td>
+        <td class="rigter"><input id="gpsh" type="checkbox" value="gps" checked> Use GPS heading</td>
     </tr>
 </table>
