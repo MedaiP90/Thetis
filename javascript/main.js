@@ -108,7 +108,7 @@ function getQueryParams(qs) {
             started = true;
             // calculate the drift
             reset();
-            updateDriftInfo(0, 0);
+            updateDriftInfo('--', '--');
             driftCalcUpdater();
         } else {
             stopDriftTest(false, "");
