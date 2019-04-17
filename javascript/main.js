@@ -7,7 +7,6 @@ var started = false;
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
-var label = ' (cog)';
 
 // relevant data
 var dataTimestamp = 0;
@@ -33,7 +32,7 @@ function updateDriftInfo(speed, direc) {
 
 // actual heading update
 function refreshInformations() {
-    $('#ah').text(heading() + '°' + label);
+    $('#ah').text(heading() + '°');
 }
 
 // stop test
@@ -55,10 +54,6 @@ function stopDriftTest(aborted, msg) {
 // verify if checkbox is checked
 function checkChecked() {
     gps = $('#gpsh').prop('checked');
-    if(gps) 
-        label = ' (cog)';
-    else
-        label = ' (mh)';
 }
 
 //////////////////////////////////////
