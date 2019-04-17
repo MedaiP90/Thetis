@@ -47,12 +47,12 @@
       </tr>
       <tr>
         <td class="left bottom">
-          <div class="name">DELTA<br>MAGNETIC HEADING</div>
-          <div class="value" id="mhc">0</div>
+          <div class="name">ACTUAL<br />HEADING</div>
+          <div class="value" id="ah">0</div>
         </td>
         <td class="right bottom">
-          <div class="name">DELTA<br>SPEED [kt]</div>
-          <div class="value" id="sowc">0</div>
+          <div class="name">REFERENCE<br />HEADING</div>
+          <div class="value" id="rh">0</div>
         </td>
       </tr>
     </table>
@@ -61,12 +61,6 @@
         <div class="name" id="abortedtxt">OPERATION ABORTED</div>
         <div id="abortedmsg"></div>
         <div id="abortedbtn"><button>OK</button></div>
-    </div>
-
-    <div id="bottom">
-        <?php
-            include 'bottom.php';
-        ?>
     </div>
 </body>
 </html>

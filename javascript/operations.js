@@ -11,9 +11,6 @@ var usog = 0, ucog = 0, umh = 0, usow = 0
 // drift values for average
 var speedVector = new Array();
 var directionVector = new Array();
-// compass and log values for average
-var compassVector = new Array();
-var logVector = new Array();
 
 // decide if use cog or mh
 var heading = function() {
@@ -39,8 +36,6 @@ function reset() {
     // reset values
     speedVector = new Array();
     directionVector = new Array();
-    compassVector = new Array();
-    logVector = new Array();
 
     usefulTimestamp = -1;
     usog = 0, ucog = 0, umh = 0;
@@ -125,35 +120,6 @@ function driftCalcUpdater() {
 
             updateDriftInfo(driftSpeed, Math.trunc(driftDirection));
             sendDriftData(driftDirection, driftSpeed);
-        }
-    }
-}
-
-// manage corrections calculation
-function correctionCalcUpdater() {
-    if(started) {
-        // compute cog and sog clean data
-        var cleanSpeed = getCleanSpeed(cog, sog, driftDirection, driftSpeed);
-        var cleanDirection = getCleanDirection(cog, driftDirection);
-
-        // compute corrections
-        var cd = Math.fixedDecimals(mh - cleanDirection, 2),
-            ld = Math.fixedDecimals(sow - cleanSpeed, 2);
-
-        compassVector.push(cd);
-        logVector.push(ld);
-
-        updateDeltaInfo(Math.trunc(cd), ld);
-
-        // repeat the survey every 'factor' seconds
-        setTimeout(correctionCalcUpdater, delay*factor);
-    } else {
-        // calculate average value
-        if(compassVector.length > 0 && logVector.length > 0) {
-            compassDelta = computeAverage(compassVector);
-            logDelta = computeAverage(logVector);
-
-            updateDeltaInfo(Math.trunc(compassDelta), logDelta);
         }
     }
 }
