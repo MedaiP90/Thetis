@@ -48,11 +48,11 @@
       <tr>
         <td class="left bottom">
           <div class="name">ACTUAL<br />HEADING</div>
-          <div class="value" id="ah">0</div>
+          <div class="value" id="ah">--</div>
         </td>
         <td class="right bottom">
           <div class="name">REFERENCE<br />HEADING</div>
-          <div class="value" id="rh">0</div>
+          <div class="value" id="rh">--</div>
         </td>
       </tr>
     </table>
