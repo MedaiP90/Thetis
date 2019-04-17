@@ -27,7 +27,7 @@ var driftDirection = null, driftSpeed = null;
 // update the drift fields
 function updateDriftInfo(speed, direc) {
     $('#cs').text(speed);
-    compass(direc, 'ch', '.left.top', 0);
+    $('#ch').text(direc + '°');
 }
 
 // actual heading update
@@ -77,7 +77,7 @@ function getQueryParams(qs) {
     $(document).ready(function(){
         resizeWindow();
           
-        compass(0, 'ch', '.left.top', 0);
+        $('#ch').text('--');
 
         var query = getQueryParams(document.location.search);
 

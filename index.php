@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/content.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <script src="javascript/jquery.min.js"></script>
-    <script src="javascript/compassIndicator.js"></script>
     <script src="javascript/functions.js"></script>
     <script src="javascript/main.js"></script>
     <script src="javascript/updating.js"></script>
@@ -38,11 +37,11 @@
       <tr>
         <td class="left top">
           <div class="name">DRIFT HEADING</div>
-          <canvas id="ch" height="0" width="0"></canvas>
+          <div class="value" id="ch">--</div>
         </td>
         <td class="right top">
           <div class="name">DRIFT SPEED [kt]</div>
-          <div class="value" id="cs">0</div>
+          <div class="value" id="cs">--</div>
         </td>
       </tr>
       <tr>

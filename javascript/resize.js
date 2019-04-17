@@ -1,7 +1,4 @@
 function resizeWindow() {
-    // reduce to zero canvas dimensions
-    $('canvas').height(0).width(0);
-
     // define variables and assign dimensions
     var height = parseInt($(window).innerHeight() * 0.99),
         width = $(window).innerWidth(),
@@ -11,9 +8,6 @@ function resizeWindow() {
         linksHeight = parseInt(marginVer * 0.95),
         linksWidth = parseInt(width * 0.2),
         tabHeight = parseInt((contHeight - 24 - linksHeight) / 2);
-    
-    // canvas size
-    var cHeight = parseInt(contHeight / 2) - $('.name')[0].clientHeight;
 
     // assign dimensions to elements
     $('body').height(height).width(width);
@@ -25,7 +19,6 @@ function resizeWindow() {
     $('.midler').width(cellWidth).height(marginVer);
     $('.rigter').width(cellWidth).height(marginVer);
     $('button').height(linksHeight).width(linksWidth);
-    $('canvas').height(cHeight).width(cHeight);
     $('.top').height(tabHeight);
     $('.bottom').height(tabHeight);
 
