@@ -75,8 +75,6 @@ function getQueryParams(qs) {
 
 (function($){
     $(document).ready(function(){
-        resizeWindow();
-          
         $('#ch').text('--');
 
         var query = getQueryParams(document.location.search);

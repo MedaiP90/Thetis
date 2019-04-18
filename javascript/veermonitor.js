@@ -59,18 +59,27 @@ function determineVeer() {
                 // not turning
                 //console.log("Not turning (avg = " + avg + ")");
                 stopDriftTest(true, "Not turning");
+                $(".left_alt").css({
+                    "background-image":"url(img/straight.png)"
+                });
             } else if(angularSpeed < 0) {
                 // turning left
                 //console.log("Turning left (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u < l && u >= c;
                 }
+                $(".left_alt").css({
+                    "background-image":"url(img/left.png)"
+                });
             } else {
                 // turning right
                 //console.log("Turning right (avg = " + avg + ")");
                 veer = function(u, l, c) {
                     return u > l && u <= c;
                 }
+                $(".left_alt").css({
+                    "background-image":"url(img/right.png)"
+                });
             }
         }
     }

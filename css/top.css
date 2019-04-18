@@ -1,0 +1,63 @@
+.btn {
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 70%;
+    text-align: center;
+}
+.topper {
+    display: inline;
+}
+.test {
+    margin-right: 30px;
+}
+.info {
+    border-top: 2px solid black;
+    text-align: center;
+    padding-top: 10px;
+}
+.left_alt {
+    float: left;
+    align-items: center;
+    position: relative;
+    width: 49.5%;
+    top: 0;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.right_alt {
+    float: right;
+    align-items: center;
+    width: 50%;
+    top: 0;
+}
+#rh, #ah {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+@media (orientation:landscape) {
+    #gpsh {
+        width: 5vh;
+        height: 5vh;
+    }
+    .btn {
+        height: 20%;
+    }
+    .info {
+        height: 20%;
+    }
+}
+@media (orientation:portrait) {
+    #gpsh {
+        width: 5vw;
+        height: 5vw;
+    }
+    .btn {
+        height: 12%;
+    }
+    .info {
+        height: 13%;
+    }
+}

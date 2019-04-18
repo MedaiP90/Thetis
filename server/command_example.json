@@ -1,5 +1,5 @@
 {
-  "command" : "drift",
-  "dh" : "140",
-  "ds" : "0.55"
+  "cmd" : "drift",
+  "data1" : "140",
+  "data2" : "0.55"
 }
