@@ -6,7 +6,10 @@
     text-align: center;
 }
 .topper {
-    display: inline;
+    position: relative;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
 .test {
     margin-right: 30px;
@@ -14,23 +17,28 @@
 .info {
     border-top: 2px solid black;
     text-align: center;
-    padding-top: 10px;
+    background-color: white;
 }
 .left_alt {
     float: left;
     align-items: center;
     position: relative;
     width: 49.5%;
-    top: 0;
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: center;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
 .right_alt {
     float: right;
     align-items: center;
+    position: relative;
     width: 50%;
-    top: 0;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
 }
 #rh, #ah {
     font-weight: bold;
@@ -55,9 +63,9 @@
         height: 5vw;
     }
     .btn {
-        height: 12%;
+        height: 15%;
     }
     .info {
-        height: 13%;
+        height: 15%;
     }
 }
