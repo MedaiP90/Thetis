@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="author" content="Leonardo Cossutta">
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/top.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../CircularMenu/menu_alt.css">
     <script src="javascript/jquery.min.js"></script>
     <script src="javascript/functions.js"></script>
     <script src="javascript/main.js"></script>
@@ -39,5 +39,9 @@
         <div id="abortedmsg"></div>
         <div id="abortedbtn"><button>OK</button></div>
     </div>
+
+    <?php
+        include '../CircularMenu/menu_circolare_alt.php';
+    ?>
 </body>
 </html>
