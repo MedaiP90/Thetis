@@ -45,9 +45,6 @@ function determineVeer() {
         if(Math.sign(angularSpeed) != Math.sign(avg)) {
             // different directions
             //console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
-            domLeft.css({
-                "background-image":"none"
-            });
             if(directionVector.length == 0)
                 stopDriftTest(true, "Not turning properly");
             else
@@ -55,9 +52,6 @@ function determineVeer() {
         } else if(angularSpeed > avg + error || angularSpeed < avg - error) {
             // the veer radius is changed too much
             //console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
-            domLeft.css({
-                "background-image":"none"
-            });
             if(directionVector.length == 0)
                 stopDriftTest(true, "Not mantaining a constant radius");
             else
