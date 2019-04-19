@@ -5,6 +5,11 @@ const myurl = "server/server.php";
 var fakeDelay = 1;
 var jumpTo = -1;
 
+// actual heading update
+function refreshInformations() {
+  domAh.text(heading() + '°');
+}
+
 // data update function
 function updatingData(){
     $.ajax({

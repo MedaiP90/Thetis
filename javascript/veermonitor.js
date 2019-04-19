@@ -1,6 +1,8 @@
 const maxTries = 5; // values before angular speed average computation
-const error = 2; // angular speed error tolerance 
-                 // avg - error < angularSpeed < avg + error
+const error = 1;    // angular speed error tolerance 
+                    // avg - error < angularSpeed < avg + error
+const error2 = 0.5; // 0 - error2 < straight < 0 + error2
+const factor = 2.5;
 const timeout = delay*factor; // time between surveys
 
 // veer direction
@@ -55,7 +57,7 @@ function determineVeer() {
             else
                 stopDriftTest(false, "");
         } else {
-            if(avg < 0 + error/4 && avg > 0 - error/4) {
+            if(avg < 0 + error2 && avg > 0 - error2) {
                 // not turning
                 //console.log("Not turning (avg = " + avg + ")");
                 stopDriftTest(true, "Not turning");

@@ -12,6 +12,9 @@ var usog = 0, ucog = 0, umh = 0, usow = 0
 var speedVector = new Array();
 var directionVector = new Array();
 
+// drift direction and speed
+var driftDirection = null, driftSpeed = null;
+
 // decide if use cog or mh
 var heading = function() {
     if(gps)

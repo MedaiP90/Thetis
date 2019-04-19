@@ -13,10 +13,7 @@ var dataTimestamp = 0;
 var sog = 0, cog = 0, mh = 0, sow = 0,
     lat = 0.0, lon = 0.0;
 
-const delay = 1000, factor = 5;
-
-// drift direction and speed
-var driftDirection = null, driftSpeed = null;
+const delay = 1000;
 
 /*
  * Dom elements for faster access
@@ -35,11 +32,6 @@ var domCs, domCh, domAh, domDrift,
 function updateDriftInfo(speed, direc) {
     domCs.text(speed);
     domCh.text(direc);
-}
-
-// actual heading update
-function refreshInformations() {
-    domAh.text(heading() + '°');
 }
 
 // stop test
