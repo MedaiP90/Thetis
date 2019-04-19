@@ -18,6 +18,13 @@ const delay = 1000, factor = 5;
 // drift direction and speed
 var driftDirection = null, driftSpeed = null;
 
+/*
+ * Dom elements for faster access
+ */
+var domCs, domCh, domAh, domDrift,
+    domRh, domMsg, domAborted, 
+    domGps, domLeft;
+
 //////////////////////////////////////
 
 /*
@@ -26,27 +33,27 @@ var driftDirection = null, driftSpeed = null;
 
 // update the drift fields
 function updateDriftInfo(speed, direc) {
-    $('#cs').text(speed);
-    $('#ch').text(direc);
+    domCs.text(speed);
+    domCh.text(direc);
 }
 
 // actual heading update
 function refreshInformations() {
-    $('#ah').text(heading() + '°');
+    domAh.text(heading() + '°');
 }
 
 // stop test
 function stopDriftTest(aborted, msg) {
     console.log("drift check stopped");
     started = false;
-    $('#drift').text('FIND DRIFT');
-    $('#rh').text('--');
+    domDrift.text('FIND DRIFT');
+    domRh.text('--');
     // activate the correction button if
     // operation not aborted
     if(aborted) {
         // make aborted message visible
-        $('#abortedmsg').text(msg);
-        $('#aborted').attr("hidden", false);
+        domMsg.text(msg);
+        domAborted.attr("hidden", false);
         // drop unaccurate results
         driftDirection = null, driftSpeed = null;
     }
@@ -54,7 +61,21 @@ function stopDriftTest(aborted, msg) {
 
 // verify if checkbox is checked
 function checkChecked() {
-    gps = $('#gpsh').prop('checked');
+    gps = domGps.prop('checked');
+}
+
+// load usefull dom element for
+// further use
+function loadElements() {
+    domCs = $('#cs');
+    domCh = $('#ch');
+    domAh = $('#ah');
+    domDrift = $('#drift');
+    domRh = $('#rh');
+    domMsg = $('#abortedmsg');
+    domAborted = $('#aborted');
+    domGps = $('#gpsh');
+    domLeft = $(".left_alt");
 }
 
 //////////////////////////////////////
@@ -75,13 +96,15 @@ function getQueryParams(qs) {
 
 (function($){
     $(document).ready(function(){
-        $('#ch').text('--');
+        loadElements();
+
+        domCh.text('--');
 
         var query = getQueryParams(document.location.search);
 
         // start updating data 
         // fast forwarding with get parameter 't'
-        $('#drift').prop("disabled",true);
+        domDrift.prop("disabled",true);
         if(query.t != undefined)
             jumpTo = query.t;
         else
@@ -90,10 +113,10 @@ function getQueryParams(qs) {
         updatingData();
 
         // add listeners to buttons
-        $('#drift').on("click", findDrift);
-        $('#gpsh').on("click", checkChecked);
+        domDrift.on("click", findDrift);
+        domGps.on("click", checkChecked);
         $('#abortedbtn').on("click", function() {
-            $('#aborted').attr("hidden", true);
+            domAborted.attr("hidden", true);
         });
     });
 
@@ -101,8 +124,7 @@ function getQueryParams(qs) {
     function findDrift() {
         if(!started) {
             console.log("drift check started");
-            $('#correction').prop("disabled",true);
-            $('#drift').text('STOP');
+            domDrift.text('STOP');
             started = true;
             // calculate the drift
             reset();

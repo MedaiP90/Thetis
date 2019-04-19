@@ -54,7 +54,7 @@ function updatingData(){
       jumpTo -= 1;
     } else if(jumpTo > -1) {
       fakeDelay = delay;
-      $('#drift').prop("disabled",false);
+      domDrift.prop("disabled",false);
       jumpTo -= 1;
     }
     

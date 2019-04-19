@@ -74,7 +74,7 @@ function driftCalcUpdater() {
         if(dataTimestamp > lastTimestamp) {
             if(usefulTimestamp == -1) {
                 storeUseful()
-                $('#rh').text(uheading() + '°');
+                domRh.text(uheading() + '°');
 
                 previousHeading = heading();
                 setTimeout(veerMonitor, timeout);
