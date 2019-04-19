@@ -12,7 +12,7 @@ html {
 }
 button {
     border: 3px solid black;
-    border-radius: 30px;
+    border-radius: 20px;
     padding: 15px;
     background-color: white;
     font-weight: bold;
@@ -45,6 +45,12 @@ button:hover {
 .cell {
     text-align: center;
 }
+.value {
+    font-weight: bolder;
+}
+.value #cs {
+    font-weight: bolder;
+}
 #unit {
     color: lightgray;
     background-color: white;
@@ -62,7 +68,7 @@ button:hover {
     text-align: center;
     background-color: white;
     border: 5px solid black;
-    border-radius: 30px;
+    border-radius: 20px;
     z-index: 2;
 }
 #abortedtxt {
