@@ -26,12 +26,12 @@
 
     <div class="bottom">
         <div class="left">
-            <div class="name cell">DRIFT <br class="br" />HEADING </div>
+            <div class="name cell">DRIFT<br class="br" /><span class="space name"> </span>HEADING</div>
             <div class="value cell" id="ch">--</div>
         </div>
         <div class="right">
-            <div class="name cell">DRIFT <br class="br" />SPEED [kt] </div>
-            <div class="value cell" id="cs">--</div>
+            <div class="name cell">DRIFT<br class="br" /><span class="space name"> </span>SPEED</div>
+            <div class="value cell"><span id="cs">--</span><span id="unit">Kt</span></div>
         </div>
     </div>
 

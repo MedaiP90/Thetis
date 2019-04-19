@@ -35,6 +35,10 @@
     align-items: center;
     position: relative;
     width: 50%;
+    background-image: url(../img/compass.png);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     margin: 0;
     top: 50%;
     transform: translate(0%, -50%);

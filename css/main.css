@@ -12,7 +12,7 @@ html {
 }
 button {
     border: 3px solid black;
-    border-radius: 10px;
+    border-radius: 30px;
     padding: 15px;
     background-color: white;
     font-weight: bold;
@@ -45,6 +45,11 @@ button:hover {
 .cell {
     text-align: center;
 }
+#unit {
+    color: lightgray;
+    background-color: white;
+    font-weight: bolder;
+}
 
 .msg {
     position: absolute;
@@ -57,11 +62,17 @@ button:hover {
     text-align: center;
     background-color: white;
     border: 5px solid black;
-    border-radius: 10px;
+    border-radius: 30px;
     z-index: 2;
 }
 #abortedtxt {
     font-weight: bolder;
+}
+#abortedmsg {
+    margin-bottom: 15px;
+}
+#abortedbtn {
+    margin-top: 15px;
 }
 
 @media (orientation:landscape) {
@@ -71,10 +82,16 @@ button:hover {
     button {
         font-size: 5vh;
     }
+    .space {
+        display: none;
+    }
     .name {
         font-size: 8vh;
     }
     .value {
+        font-size: 25vh;
+    }
+    .value #cs {
         font-size: 25vh;
     }
     .top {
@@ -96,6 +113,9 @@ button:hover {
         width: 50%;
         height: 100%;
         top: 0;
+    }
+    #unit {
+        font-size: 10vh;
     }
     #abortedtxt {
         font-size: 7vh;
@@ -120,6 +140,9 @@ button:hover {
     .value {
         font-size: 25vw;
     }
+    .value #cs {
+        font-size: 25vw;
+    }
     .top {
         width: 100%;
         height: 30%;
@@ -139,6 +162,9 @@ button:hover {
         width: 100%;
         height: 50%;
         top: 0;
+    }
+    #unit {
+        font-size: 10vw;
     }
     #abortedtxt {
         font-size: 7vw;
