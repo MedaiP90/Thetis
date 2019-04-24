@@ -117,13 +117,15 @@ function driftCalcUpdater() {
 
         // repeat the survey
         setTimeout(driftCalcUpdater, delay);
-    } else {
+    } else if(!process_aborted) {
         // calculate average value
         if(speedVector.length > 0 && directionVector.length > 0) {
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
+
+            updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
+            // send data to Argos
+            sendDriftData(driftDirection, driftSpeed);
         }
-        // unlock resources
-        writing = false;
     }
 }

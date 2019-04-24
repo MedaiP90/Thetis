@@ -4,7 +4,7 @@
 
 // test state
 var started = false;
-var writing = false;
+var process_aborted = false;
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
@@ -37,6 +37,7 @@ function updateDriftInfo(speed, direc) {
 
 // stop test
 function stopDriftTest(aborted, msg) {
+    process_aborted = aborted;
     console.log("drift check stopped");
     started = false;
     domDrift.text('FIND DRIFT');
@@ -44,9 +45,6 @@ function stopDriftTest(aborted, msg) {
     domLeft.css({
         "background-image":"none"
     });
-    while(writing) {
-        // wait for driftCalcUpdater() to finish
-    }
     // activate the correction button if
     // operation not aborted
     if(aborted) {
@@ -56,13 +54,7 @@ function stopDriftTest(aborted, msg) {
         // drop unaccurate results
         driftDirection = null, driftSpeed = null;
         updateDriftInfo('--', '--');
-    } else {
-        updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
-    }
-    // send data to Argos
-    if(!aborted && driftDirection != null && driftSpeed != null) {
-        sendDriftData(driftDirection, driftSpeed);
-    }
+    } 
 }
 
 // verify if checkbox is checked
@@ -132,11 +124,10 @@ function getQueryParams(qs) {
             console.log("drift check started");
             domDrift.text('STOP');
             started = true;
+            process_aborted = false;
             // calculate the drift
             reset();
             updateDriftInfo('--', '--');
-            // lock resources
-            writing = true;
             driftCalcUpdater();
         } else {
             stopDriftTest(false, "");
