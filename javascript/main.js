@@ -4,6 +4,7 @@
 
 // test state
 var started = false;
+var writing = false;
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
@@ -43,6 +44,9 @@ function stopDriftTest(aborted, msg) {
     domLeft.css({
         "background-image":"none"
     });
+    while(writing) {
+        // wait for driftCalcUpdater() to finish
+    }
     // activate the correction button if
     // operation not aborted
     if(aborted) {
@@ -51,6 +55,13 @@ function stopDriftTest(aborted, msg) {
         domAborted.attr("hidden", false);
         // drop unaccurate results
         driftDirection = null, driftSpeed = null;
+        updateDriftInfo('--', '--');
+    } else {
+        updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
+    }
+    // send data to Argos
+    if(!aborted && driftDirection != null && driftSpeed != null) {
+        sendDriftData(driftDirection, driftSpeed);
     }
 }
 
@@ -124,6 +135,8 @@ function getQueryParams(qs) {
             // calculate the drift
             reset();
             updateDriftInfo('--', '--');
+            // lock resources
+            writing = true;
             driftCalcUpdater();
         } else {
             stopDriftTest(false, "");

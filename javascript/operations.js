@@ -39,6 +39,8 @@ function reset() {
     // reset values
     speedVector = new Array();
     directionVector = new Array();
+    driftDirection = null;
+    driftSpeed = null;
 
     usefulTimestamp = -1;
     usog = 0, ucog = 0, umh = 0;
@@ -120,9 +122,8 @@ function driftCalcUpdater() {
         if(speedVector.length > 0 && directionVector.length > 0) {
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
-
-            updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
-            sendDriftData(driftDirection, driftSpeed);
         }
+        // unlock resources
+        writing = false;
     }
 }
