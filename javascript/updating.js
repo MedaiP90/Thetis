@@ -5,6 +5,11 @@ const myurl = "server/server.php";
 var fakeDelay = 1;
 var jumpTo = -1;
 
+// actual heading update
+function refreshInformations() {
+  domAh.text(heading() + '°');
+}
+
 // data update function
 function updatingData(){
     $.ajax({
@@ -54,7 +59,7 @@ function updatingData(){
       jumpTo -= 1;
     } else if(jumpTo > -1) {
       fakeDelay = delay;
-      $('#drift').prop("disabled",false);
+      domDrift.prop("disabled",false);
       jumpTo -= 1;
     }
     

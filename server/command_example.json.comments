@@ -1,5 +1,5 @@
 {
-  "command" : "drift", // command type
-  "dh" : "140", // drift heading
-  "ds" : "0.55" // drift speed
+  "cmd" : "drift", // command type
+  "data1" : "140", // drift heading
+  "data2" : "0.55" // drift speed
 }

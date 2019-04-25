@@ -1,0 +1,74 @@
+.btn {
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 70%;
+    text-align: center;
+}
+.topper {
+    position: relative;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+.test {
+    margin-right: 30px;
+}
+.info {
+    border-top: 2px solid black;
+    text-align: center;
+}
+.left_alt {
+    float: left;
+    align-items: center;
+    position: relative;
+    width: 49.5%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+.right_alt {
+    float: right;
+    align-items: center;
+    position: relative;
+    width: 50%;
+    background-image: url(../img/compass.png);
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+#rh, #ah {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+@media (orientation:landscape) {
+    #gpsh {
+        width: 5vh;
+        height: 5vh;
+    }
+    .btn {
+        height: 20%;
+    }
+    .info {
+        height: 20%;
+    }
+}
+@media (orientation:portrait) {
+    #gpsh {
+        width: 5vw;
+        height: 5vw;
+    }
+    .btn {
+        height: 15%;
+    }
+    .info {
+        height: 15%;
+    }
+}

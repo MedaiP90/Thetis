@@ -1,0 +1,181 @@
+* {
+    font-family: arial;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+html {
+    background-image: url("../svg/logo2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+button {
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 15px;
+    background-color: white;
+    font-weight: bold;
+}
+button:hover {
+    background-color: lightgray;
+}
+.top {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.bottom {
+    position: absolute;
+    margin: auto;
+    border-top: 3px solid black; 
+    left: 0;
+    right: 0;
+}
+.left {
+    float: left;
+    align-items: center;
+}
+.right {
+    float: right;
+    align-items: center;
+}
+.cell {
+    text-align: center;
+}
+.value {
+    font-weight: bolder;
+}
+.value #cs {
+    font-weight: bolder;
+}
+#unit {
+    color: lightgray;
+    background-color: white;
+    font-weight: bolder;
+}
+
+.msg {
+    position: absolute;
+    margin: auto;
+    padding: 30px;
+    width: 70%;
+    left: 0;
+    right: 0;
+    top: 30%;
+    text-align: center;
+    background-color: white;
+    border: 5px solid black;
+    border-radius: 20px;
+    z-index: 2;
+}
+#abortedtxt {
+    font-weight: bolder;
+}
+#abortedmsg {
+    margin-bottom: 15px;
+}
+#abortedbtn {
+    margin-top: 15px;
+}
+
+@media (orientation:landscape) {
+    * {
+        font-size: 4vh;
+    }
+    button {
+        font-size: 5vh;
+    }
+    .space {
+        display: none;
+    }
+    .name {
+        font-size: 8vh;
+    }
+    .value {
+        font-size: 25vh;
+    }
+    .value #cs {
+        font-size: 25vh;
+    }
+    .top {
+        width: 100%;
+        height: 40%;
+    }
+    .bottom {
+        width: 100%;
+        height: 60%;
+        top: 40%;
+    }
+    .left {
+        width: 49%;
+        height: 100%;
+        top: 0;
+        border-right: 3px solid black;
+    }
+    .right {
+        width: 50%;
+        height: 100%;
+        top: 0;
+    }
+    #unit {
+        font-size: 10vh;
+    }
+    #abortedtxt {
+        font-size: 7vh;
+    }
+    #abortedmsg {
+        font-size: 5vh;
+    }
+}
+@media (orientation:portrait) {
+    * {
+        font-size: 4vw;
+    }
+    .br {
+        display: none;
+    }
+    button {
+        font-size: 5vw;
+    }
+    .name {
+        font-size: 8vw;
+    }
+    .value {
+        font-size: 25vw;
+    }
+    .value #cs {
+        font-size: 25vw;
+    }
+    .top {
+        width: 100%;
+        height: 30%;
+    }
+    .bottom {
+        width: 100%;
+        height: 70%;
+        top: 30%;
+    }
+    .left {
+        width: 100%;
+        height: 50%;
+        top: 0;
+        border-bottom: 3px solid black;
+    }
+    .right {
+        width: 100%;
+        height: 50%;
+        top: 0;
+    }
+    #unit {
+        font-size: 10vw;
+    }
+    #abortedtxt {
+        font-size: 7vw;
+    }
+    #abortedmsg {
+        font-size: 5vw;
+    }
+}

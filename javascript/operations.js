@@ -12,6 +12,9 @@ var usog = 0, ucog = 0, umh = 0, usow = 0
 var speedVector = new Array();
 var directionVector = new Array();
 
+// drift direction and speed
+var driftDirection = null, driftSpeed = null;
+
 // decide if use cog or mh
 var heading = function() {
     if(gps)
@@ -36,6 +39,8 @@ function reset() {
     // reset values
     speedVector = new Array();
     directionVector = new Array();
+    driftDirection = null;
+    driftSpeed = null;
 
     usefulTimestamp = -1;
     usog = 0, ucog = 0, umh = 0;
@@ -74,7 +79,7 @@ function driftCalcUpdater() {
         if(dataTimestamp > lastTimestamp) {
             if(usefulTimestamp == -1) {
                 storeUseful()
-                $('#rh').text(uheading() + '°');
+                domRh.text(uheading() + '°');
 
                 previousHeading = heading();
                 setTimeout(veerMonitor, timeout);
@@ -91,7 +96,7 @@ function driftCalcUpdater() {
                     directionVector.push(direc);
 
                     storeUseful();
-                    updateDriftInfo(speed, Math.trunc(direc));
+                    updateDriftInfo(speed, Math.trunc(direc) + '°');
                 }
             }
 
@@ -112,13 +117,14 @@ function driftCalcUpdater() {
 
         // repeat the survey
         setTimeout(driftCalcUpdater, delay);
-    } else {
+    } else if(!process_aborted) {
         // calculate average value
         if(speedVector.length > 0 && directionVector.length > 0) {
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
 
-            updateDriftInfo(driftSpeed, Math.trunc(driftDirection));
+            updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
+            // send data to Argos
             sendDriftData(driftDirection, driftSpeed);
         }
     }

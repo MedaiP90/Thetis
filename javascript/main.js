@@ -4,6 +4,7 @@
 
 // test state
 var started = false;
+var process_aborted = false;
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
@@ -13,10 +14,14 @@ var dataTimestamp = 0;
 var sog = 0, cog = 0, mh = 0, sow = 0,
     lat = 0.0, lon = 0.0;
 
-const delay = 1000, factor = 5;
+const delay = 1000;
 
-// drift direction and speed
-var driftDirection = null, driftSpeed = null;
+/*
+ * Dom elements for faster access
+ */
+var domCs, domCh, domAh, domDrift,
+    domRh, domMsg, domAborted, 
+    domGps, domLeft;
 
 //////////////////////////////////////
 
@@ -26,35 +31,49 @@ var driftDirection = null, driftSpeed = null;
 
 // update the drift fields
 function updateDriftInfo(speed, direc) {
-    $('#cs').text(speed);
-    compass(direc, 'ch', '.left.top', 0);
-}
-
-// actual heading update
-function refreshInformations() {
-    $('#ah').text(heading() + '°');
+    domCs.text(speed);
+    domCh.text(direc);
 }
 
 // stop test
 function stopDriftTest(aborted, msg) {
+    process_aborted = aborted;
     console.log("drift check stopped");
     started = false;
-    $('#drift').text('FIND DRIFT');
-    $('#rh').text('--');
+    domDrift.text('FIND DRIFT');
+    domRh.text('--');
+    domLeft.css({
+        "background-image":"none"
+    });
     // activate the correction button if
     // operation not aborted
     if(aborted) {
         // make aborted message visible
-        $('#abortedmsg').text(msg);
-        $('#aborted').attr("hidden", false);
+        domMsg.text(msg);
+        domAborted.attr("hidden", false);
         // drop unaccurate results
         driftDirection = null, driftSpeed = null;
-    }
+        updateDriftInfo('--', '--');
+    } 
 }
 
 // verify if checkbox is checked
 function checkChecked() {
-    gps = $('#gpsh').prop('checked');
+    gps = domGps.prop('checked');
+}
+
+// load usefull dom element for
+// further use
+function loadElements() {
+    domCs = $('#cs');
+    domCh = $('#ch');
+    domAh = $('#ah');
+    domDrift = $('#drift');
+    domRh = $('#rh');
+    domMsg = $('#abortedmsg');
+    domAborted = $('#aborted');
+    domGps = $('#gpsh');
+    domLeft = $(".left_alt");
 }
 
 //////////////////////////////////////
@@ -75,15 +94,15 @@ function getQueryParams(qs) {
 
 (function($){
     $(document).ready(function(){
-        resizeWindow();
-          
-        compass(0, 'ch', '.left.top', 0);
+        loadElements();
+
+        domCh.text('--');
 
         var query = getQueryParams(document.location.search);
 
         // start updating data 
         // fast forwarding with get parameter 't'
-        $('#drift').prop("disabled",true);
+        domDrift.prop("disabled",true);
         if(query.t != undefined)
             jumpTo = query.t;
         else
@@ -92,10 +111,10 @@ function getQueryParams(qs) {
         updatingData();
 
         // add listeners to buttons
-        $('#drift').on("click", findDrift);
-        $('#gpsh').on("click", checkChecked);
+        domDrift.on("click", findDrift);
+        domGps.on("click", checkChecked);
         $('#abortedbtn').on("click", function() {
-            $('#aborted').attr("hidden", true);
+            domAborted.attr("hidden", true);
         });
     });
 
@@ -103,12 +122,12 @@ function getQueryParams(qs) {
     function findDrift() {
         if(!started) {
             console.log("drift check started");
-            $('#correction').prop("disabled",true);
-            $('#drift').text('STOP');
+            domDrift.text('STOP');
             started = true;
+            process_aborted = false;
             // calculate the drift
             reset();
-            updateDriftInfo(0, 0);
+            updateDriftInfo('--', '--');
             driftCalcUpdater();
         } else {
             stopDriftTest(false, "");
