@@ -129,7 +129,7 @@ function driftCalcUpdater() {
 
             updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
 
-            if(speedVector.length > 4 && directionVector.length > 4) {  
+            if(speedVector.length >= 4 && directionVector.length >= 4) {  
                 // send data to Argos
                 sendDriftData(driftDirection, driftSpeed);
             } else {
