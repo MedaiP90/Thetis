@@ -143,6 +143,8 @@ function driftCalcUpdater() {
                     updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
                     // send data to Argos
                     sendDriftData(driftDirection, driftSpeed);
+
+                    domWorning.attr("hidden", true);
                 });
         }
     }
