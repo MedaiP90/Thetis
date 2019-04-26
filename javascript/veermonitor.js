@@ -88,6 +88,10 @@ function determineVeer() {
     
     if(started) {
         setTimeout(determineVeer, timeout*(maxTries + 1));
+    } else {
+        domLeft.css({
+            "background-image":"none"
+        });
     }
 }
 

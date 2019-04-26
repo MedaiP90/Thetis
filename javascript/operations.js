@@ -118,6 +118,10 @@ function driftCalcUpdater() {
         // repeat the survey
         setTimeout(driftCalcUpdater, delay);
     } else if(!process_aborted) {
+        domLeft.css({
+            "background-image":"none"
+        });
+
         // calculate average value
         if(speedVector.length > 4 && directionVector.length > 4) {
             driftSpeed = computeAverage(speedVector);

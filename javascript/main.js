@@ -42,9 +42,6 @@ function stopDriftTest(aborted, msg) {
     started = false;
     domDrift.text('FIND DRIFT');
     domRh.text('--');
-    domLeft.css({
-        "background-image":"none"
-    });
     // activate the correction button if
     // operation not aborted
     if(aborted) {
