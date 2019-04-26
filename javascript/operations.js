@@ -136,7 +136,7 @@ function driftCalcUpdater() {
                 // not enough drift data: user decide if use data anyway
                 // or get rid of them and repeat the test
                 domWorning.attr("hidden", false);
-                $("#datacount").text(speedVector.length);
+                $("#datacount").text(Math.min(speedVector.length, directionVector.length));
                 $("#btnsend").on("click", function() {
                     // send data to Argos
                     sendDriftData(driftDirection, driftSpeed);
