@@ -119,13 +119,27 @@ function driftCalcUpdater() {
         setTimeout(driftCalcUpdater, delay);
     } else if(!process_aborted) {
         // calculate average value
-        if(speedVector.length > 0 && directionVector.length > 0) {
+        if(speedVector.length > 4 && directionVector.length > 4) {
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
 
             updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
             // send data to Argos
             sendDriftData(driftDirection, driftSpeed);
+        } else if(speedVector.length > 0 && speedVector.length <= 4 &&
+            directionVector.length > 0 && directionVector.length <= 4) {
+                // not enough drift data: user decide if use data anyway
+                // or get rid of them and repeat the test
+                domWorning.attr("hidden", false);
+                $("#datacount").text(speedVector.length);
+                $("btnsend").on("click", function() {
+                    driftSpeed = computeAverage(speedVector);
+                    driftDirection = computeAverage(directionVector);
+
+                    updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
+                    // send data to Argos
+                    sendDriftData(driftDirection, driftSpeed);
+                });
         }
     }
 }

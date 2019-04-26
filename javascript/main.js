@@ -21,7 +21,7 @@ const delay = 1000;
  */
 var domCs, domCh, domAh, domDrift,
     domRh, domMsg, domAborted, 
-    domGps, domLeft;
+    domGps, domLeft, domWorning;
 
 //////////////////////////////////////
 
@@ -74,6 +74,7 @@ function loadElements() {
     domAborted = $('#aborted');
     domGps = $('#gpsh');
     domLeft = $(".left_alt");
+    domWorning = $("#worning");
 }
 
 //////////////////////////////////////
@@ -115,6 +116,12 @@ function getQueryParams(qs) {
         domGps.on("click", checkChecked);
         $('#abortedbtn').on("click", function() {
             domAborted.attr("hidden", true);
+        });
+        $('#btncancel').on("click", function() {
+            domWorning.attr("hidden", true);
+            // drop unaccurate results
+            driftDirection = null, driftSpeed = null;
+            updateDriftInfo('--', '--');
         });
     });
 

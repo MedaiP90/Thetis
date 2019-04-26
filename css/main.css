@@ -71,13 +71,13 @@ button:hover {
     border-radius: 20px;
     z-index: 2;
 }
-#abortedtxt {
+.msgtxt {
     font-weight: bolder;
 }
-#abortedmsg {
+.msgcnt {
     margin-bottom: 15px;
 }
-#abortedbtn {
+.msgbtn {
     margin-top: 15px;
 }
 
@@ -123,10 +123,10 @@ button:hover {
     #unit {
         font-size: 10vh;
     }
-    #abortedtxt {
+    .msgtxt {
         font-size: 7vh;
     }
-    #abortedmsg {
+    .msgcnt {
         font-size: 5vh;
     }
 }
@@ -172,10 +172,10 @@ button:hover {
     #unit {
         font-size: 10vw;
     }
-    #abortedtxt {
+    .msgtxt {
         font-size: 7vw;
     }
-    #abortedmsg {
+    .msgcnt {
         font-size: 5vw;
     }
 }

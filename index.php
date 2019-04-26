@@ -36,9 +36,18 @@
     </div>
 
     <div id="aborted" class="msg" hidden>
-        <div id="abortedtxt">OPERATION ABORTED</div>
-        <div id="abortedmsg"></div>
-        <div id="abortedbtn"><button>OK</button></div>
+        <div id="abortedtxt" class="msgtxt">OPERATION ABORTED</div>
+        <div id="abortedmsg" class="msgcnt"></div>
+        <div id="abortedbtn" class="msgbtn"><button>OK</button></div>
+    </div>
+
+    <div id="worning" class="msg" hidden>
+        <div id="worningtxt" class="msgtxt">NOT ENOUGH DATA COLLECTED [<span class="msgtxt" id="datacount"></span>]</div>
+        <div id="worningmsg" class="msgcnt">Send results to Argos anyway?</div>
+        <div id="worningbtn" class="msgbtn">
+            <button id="btnsend">SEND</button>
+            <button id="btncancel">CANCEL</button>
+        </div>
     </div>
 
     <?php
