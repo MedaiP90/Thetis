@@ -1,7 +1,7 @@
 const maxTries = 5; // values before angular speed average computation
-const error = 1.5;  // angular speed error tolerance 
+const error = 5;  // angular speed error tolerance 
                     // avg - error < angularSpeed < avg + error
-const error2 = 0.5; // 0 - error2 < straight < 0 + error2
+const error2 = 0.25; // 0 - error2 < straight < 0 + error2
 const factor = 2.5;
 const timeout = delay*factor; // time between surveys
 
@@ -31,12 +31,14 @@ function resetAngularSpeeds() {
 
     angularSpeeds = new Array();
     angularSpeedsTmp = new Array();
+
+    avg = null;
 }
 
 // compute the veer direction 
 // (veer function)
 function determineVeer() {
-    if(angularSpeed != null) {
+    if(angularSpeed != null && started) {
         if(angularSpeeds.length > 0) {
             avg = computeAverage(angularSpeeds);
         } else {
@@ -46,14 +48,14 @@ function determineVeer() {
             // different directions
             //console.log("Different directions (avg = " + avg + ", as = " + angularSpeed + ")");
             if(directionVector.length == 0)
-                stopDriftTest(true, "Not turning properly");
+                stopDriftTest(true, "Different turning direction");
             else
                 stopDriftTest(false, "");
         } else if(angularSpeed > avg + error || angularSpeed < avg - error) {
             // the veer radius is changed too much
             //console.log("Accelerating (avg = " + avg + ", as = " + angularSpeed + ")");
             if(directionVector.length == 0)
-                stopDriftTest(true, "Not mantaining a constant radius");
+                stopDriftTest(true, "Not turning properly: different speed or different radius");
             else
                 stopDriftTest(false, "");
         } else {
@@ -87,7 +89,7 @@ function determineVeer() {
     }
     
     if(started) {
-        setTimeout(determineVeer, timeout*(maxTries + 1));
+        setTimeout(determineVeer, timeout*(maxTries + 2.2));
     } else {
         domLeft.css({
             "background-image":"none"
