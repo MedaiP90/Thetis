@@ -2,8 +2,8 @@
 const myurl = "server/server.php";
 
 // useful for fast forwarding
-var fakeDelay = 1;
-var jumpTo = -1;
+/*var fakeDelay = 1;
+var jumpTo = -1;*/
 
 // actual heading update
 function refreshInformations() {
@@ -31,8 +31,8 @@ function updatingData(){
               cog = json.cog || cog;
               mh = json.mh || mh;
               sow = json.sow || sow;
-              lat = Math.nmeaToDec(json.lat) || lat;
-              lon = Math.nmeaToDec(json.lon) || lon;
+              lat = json.lat || lat; // Math.nmeaToDec(json.lat) || lat;
+              lon = json.lon || lon; // Math.nmeaToDec(json.lon) || lon;
           
           dataTimestamp += delay; 
             
@@ -55,14 +55,14 @@ function updatingData(){
     });
 
     // manage the fast forwarding
-    if(jumpTo > 0) {
+    /*if(jumpTo > 0) {
       jumpTo -= 1;
     } else if(jumpTo > -1) {
       fakeDelay = delay;
       domDrift.prop("disabled",false);
       jumpTo -= 1;
-    }
+    }*/
     
     // time for data refresh
-    setTimeout(updatingData, fakeDelay);
+    setTimeout(updatingData, delay); //fakeDelay);
 }

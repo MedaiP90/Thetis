@@ -78,7 +78,7 @@ function loadElements() {
 
 // find get parameters from url
 // (used for passing the fast forward time)
-function getQueryParams(qs) {
+/*function getQueryParams(qs) {
     qs = qs.split('+').join(' ');
 
     var params = { }, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
@@ -88,7 +88,7 @@ function getQueryParams(qs) {
     }
 
     return params;
-}
+}*/
 
 (function($){
     $(document).ready(function(){
@@ -96,15 +96,15 @@ function getQueryParams(qs) {
 
         domCh.text('--');
 
-        var query = getQueryParams(document.location.search);
+        //var query = getQueryParams(document.location.search);
 
         // start updating data 
         // fast forwarding with get parameter 't'
-        domDrift.prop("disabled",true);
+        /*domDrift.prop("disabled",true);
         if(query.t != undefined)
             jumpTo = query.t;
         else
-            jumpTo = 0;
+            jumpTo = 0;*/
           
         updatingData();
 
