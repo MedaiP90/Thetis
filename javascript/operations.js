@@ -67,7 +67,7 @@ function storeUseful() {
 // calculate average from an array of values
 // using weighted average formula
 function computeAverage(array) {
-    var steps = 5;
+    var steps = 10;
     var weight = computeMaxWeight(array.length, steps);
     var xSum = array[0] * weight, 
         pSum = weight;
