@@ -42,7 +42,7 @@
     </div>
 
     <div id="worning" class="msg" hidden>
-        <div id="worningtxt" class="msgtxt">NOT ENOUGH DATA COLLECTED [<span class="msgtxt" id="datacount"></span>]</div>
+        <div id="worningtxt" class="msgtxt">DATA MAY BE INACCURATE [<span class="msgtxt" id="datacount"></span>rot.]</div>
         <div id="worningmsg" class="msgcnt">Send results to Argos anyway?</div>
         <div id="worningbtn" class="msgbtn">
             <button id="btnsend">SEND</button>

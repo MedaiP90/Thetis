@@ -65,12 +65,28 @@ function storeUseful() {
 }
 
 // calculate average from an array of values
+// using weighted average formula
 function computeAverage(array) {
-    var pSum = 0;
-    array.forEach(function(value) {
-        pSum += value;
-    });
-    return Math.fixedDecimals(pSum / array.length, 2);
+    var steps = 5;
+    var weight = computeMaxWeight(array.length, steps);
+    var xSum = array[0] * weight, 
+        pSum = weight;
+    
+    for(var i = 1; i < array.length; i++) {
+        xSum += array[i] * weight;
+        pSum += weight;
+        weight -= steps;
+    }
+
+    return Math.fixedDecimals(xSum / pSum, 2);
+}
+
+function computeMaxWeight(elements, steps) {
+    var init = 0;
+    for(var i = 0; i < elements - 1; i++) {
+        init += steps;
+    }
+    return init;
 }
 
 // manage the drift calculation
@@ -129,11 +145,12 @@ function driftCalcUpdater() {
 
             updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
 
-            if(speedVector.length >= 4 && directionVector.length >= 4) {  
+            if(speedVector.length >= 2 && speedVector.length <= 4 && 
+                directionVector.length >= 2 && directionVector.length <= 4) {  
                 // send data to Argos
                 sendDriftData(driftDirection, driftSpeed);
             } else {
-                // not enough drift data: user decide if use data anyway
+                // data count not in safe range: user decide if use data anyway
                 // or get rid of them and repeat the test
                 domWorning.attr("hidden", false);
                 $("#datacount").text(Math.min(speedVector.length, directionVector.length));
