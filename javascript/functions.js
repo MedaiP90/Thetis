@@ -51,7 +51,7 @@ function getDriftSpeed(latA, lonA, tsA, latB, lonB, tsB) {
     var dT = (tsB - tsA) / 1000;
     var speed = (dist / dT) * 3.6;
 
-    return Math.fixedDecimals(speed * 0.539957, 2);
+    return Math.fixedDecimals(speed * 0.539957, 1);
 }
 
 // calculate the drift heading

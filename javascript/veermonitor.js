@@ -1,5 +1,5 @@
 const maxTries = 5; // values before angular speed average computation
-const error = 5;  // angular speed error tolerance 
+const error = 8.5;  // angular speed error tolerance 
                     // avg - error < angularSpeed < avg + error
 const error2 = 0.25; // 0 - error2 < straight < 0 + error2
 const factor = 2.5;
