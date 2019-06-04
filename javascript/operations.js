@@ -68,11 +68,10 @@ function storeUseful() {
 // using weighted average formula
 function computeAverage(array) {
     var steps = 2;
-    var weight = Math.pow(steps, array.length - 2);
-    var xSum = array[0] * weight, 
-        pSum = weight;
+    var weight = Math.pow(steps, array.length - 1);
+    var xSum = 0, pSum = 0;
     
-    for(var i = 1; i < array.length; i++) {
+    for(var i = 0; i < array.length; i++) {
         xSum += array[i] * weight;
         pSum += weight;
         weight /= steps;
