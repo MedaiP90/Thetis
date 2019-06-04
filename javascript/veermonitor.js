@@ -40,7 +40,7 @@ function resetAngularSpeeds() {
 function determineVeer() {
     if(angularSpeed != null && started) {
         if(angularSpeeds.length > 0) {
-            avg = computeAverage(angularSpeeds);
+            avg = getAvg(angularSpeeds);
         } else {
             avg = angularSpeed;
         }
@@ -97,6 +97,15 @@ function determineVeer() {
     }
 }
 
+// compute classic average
+function getAvg(array) {
+    var pSum = 0;
+    array.forEach(function(value) {
+        pSum += value;
+    });
+    return Math.fixedDecimals(pSum / array.length, 2);
+}
+
 // observe the veer and calculate the
 // instantaneous and average angular speeds
 function veerMonitor() {
@@ -105,7 +114,7 @@ function veerMonitor() {
             if(angularSpeed != null) {
                 angularSpeeds.push(angularSpeed);
             }
-            angularSpeed = computeAverage(angularSpeedsTmp);
+            angularSpeed = getAvg(angularSpeedsTmp);
             angularSpeedsTmp = new Array();
             tries = maxTries;
         }
