@@ -67,26 +67,18 @@ function storeUseful() {
 // calculate average from an array of values
 // using weighted average formula
 function computeAverage(array) {
-    var steps = 10;
-    var weight = computeMaxWeight(array.length, steps);
+    var steps = 2;
+    var weight = Math.pow(steps, array.length - 2);
     var xSum = array[0] * weight, 
         pSum = weight;
     
     for(var i = 1; i < array.length; i++) {
         xSum += array[i] * weight;
         pSum += weight;
-        weight -= steps;
+        weight /= steps;
     }
 
     return Math.fixedDecimals(xSum / pSum, 2);
-}
-
-function computeMaxWeight(elements, steps) {
-    var init = 0;
-    for(var i = 0; i < elements - 1; i++) {
-        init += steps;
-    }
-    return init;
 }
 
 // manage the drift calculation
