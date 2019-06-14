@@ -5,11 +5,6 @@
     overflow: hidden;
     z-index: 0;
 }
-html {
-    background-image: url("../svg/logo2.png");
-    background-repeat: no-repeat;
-    background-position: center;
-}
 button {
     border: 3px solid black;
     border-radius: 20px;

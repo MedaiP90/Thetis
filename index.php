@@ -7,8 +7,6 @@
     <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/top.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="../CircularMenu/menu_alt.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <script src="javascript/jquery.min.js"></script>
     <script src="javascript/functions.js"></script>
     <script src="javascript/main.js"></script>
@@ -49,9 +47,5 @@
             <button id="btncancel">CANCEL</button>
         </div>
     </div>
-
-    <?php
-        include '../CircularMenu/menu_circolare_alt.php';
-    ?>
 </body>
 </html>
