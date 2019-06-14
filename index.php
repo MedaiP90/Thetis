@@ -27,7 +27,7 @@
     <div class="bottom">
         <div class="left">
             <div class="name cell">DRIFT<br class="br" /><span class="space name"> </span>HEADING</div>
-            <div class="value cell" id="ch">--</div>
+            <div class="value cell"><span id="ch">--</span></div>
         </div>
         <div class="right">
             <div class="name cell">DRIFT<br class="br" /><span class="space name"> </span>SPEED</div>

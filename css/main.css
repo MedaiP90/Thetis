@@ -51,6 +51,9 @@ button:hover {
 .value #cs {
     font-weight: bolder;
 }
+.value #ch {
+    font-weight: bolder;
+}
 #unit {
     color: lightgray;
     background-color: white;
@@ -100,6 +103,9 @@ button:hover {
     .value #cs {
         font-size: 25vh;
     }
+    .value #ch {
+        font-size: 25vh;
+    }
     .top {
         width: 100%;
         height: 40%;
@@ -132,22 +138,25 @@ button:hover {
 }
 @media (orientation:portrait) {
     * {
-        font-size: 4vw;
+        font-size: 100%;
     }
     .br {
         display: none;
     }
     button {
-        font-size: 5vw;
+        font-size: 120%;
     }
     .name {
-        font-size: 8vw;
+        font-size: 160%;
     }
     .value {
-        font-size: 25vw;
+        font-size: 200%;
     }
     .value #cs {
-        font-size: 25vw;
+        font-size: 200%;
+    }
+    .value #ch {
+        font-size: 200%;
     }
     .top {
         width: 100%;
@@ -170,7 +179,7 @@ button:hover {
         top: 0;
     }
     #unit {
-        font-size: 10vw;
+        font-size: 125%;
     }
     .msgtxt {
         font-size: 7vw;
