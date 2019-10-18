@@ -1,6 +1,15 @@
 // server address
 const myurl = "server/server.php";
 
+// useful for fast forwarding
+/*var fakeDelay = 1;
+var jumpTo = -1;*/
+
+// actual heading update
+function refreshInformations() {
+  domAh.text(heading() + '°');
+}
+
 // data update function
 function updatingData(){
     $.ajax({
@@ -22,8 +31,8 @@ function updatingData(){
               cog = json.cog || cog;
               mh = json.mh || mh;
               sow = json.sow || sow;
-              lat = Math.nmeaToDec(json.lat) || lat;
-              lon = Math.nmeaToDec(json.lon) || lon;
+              lat = json.lat || lat; // Math.nmeaToDec(json.lat) || lat;
+              lon = json.lon || lon; // Math.nmeaToDec(json.lon) || lon;
           
           dataTimestamp += delay; 
             
@@ -36,6 +45,7 @@ function updatingData(){
       // connection error
       error :function(jqXHR, textStatus, errorThrown){
           console.error("error : " + jqXHR + " : " + textStatus + " : " + errorThrown);
+          stopDriftTest(true, "Connection error");
       },
       
       // complete connection
@@ -43,7 +53,16 @@ function updatingData(){
           // console.log("complete : " + textStatus);
       }
     });
+
+    // manage the fast forwarding
+    /*if(jumpTo > 0) {
+      jumpTo -= 1;
+    } else if(jumpTo > -1) {
+      fakeDelay = delay;
+      domDrift.prop("disabled",false);
+      jumpTo -= 1;
+    }*/
     
     // time for data refresh
-    setTimeout(updatingData, delay);
+    setTimeout(updatingData, delay); //fakeDelay);
 }

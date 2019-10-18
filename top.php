@@ -1,7 +1,16 @@
-<table id="top_content">
-    <tr>
-        <td class="lefter"><button class="test" id="drift">FIND DRIFT</button></td>
-        <td class="midler">Actual heading: <span id="ah">0</span><br>Ref. heading: <span id="rh">0</span></td>
-        <td class="rigter"><button class="test" id="correction">FIND DELTA</button></td>
-    </tr>
-</table>
+<div class="btn">
+    <div class="topper">
+        <button class="test" id="drift">FIND DRIFT</button>
+        <input id="gpsh" type="checkbox" value="gps" checked><label for="gpsh"> GPS</label>
+    </div>
+</div>
+<div class="info">
+    <div class="left_alt">
+        <div class="label">ACTUAL HEADING</div>
+        <div class="label" id="ah">--</div>
+    </div>
+    <div class="right_alt">
+        <div class="label">REFERENCE HEADING</div>
+        <div class="label" id="rh">--</div>
+    </div>
+</div>

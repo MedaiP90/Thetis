@@ -8,25 +8,12 @@ var usefulTimestamp = -1;
 var usog = 0, ucog = 0, umh = 0, usow = 0
     ulat = 0.0, ulon = 0.0;
 
-// veer direction
-var veer = function(u, l, c) {
-    return false;
-};
-var left = false;
-
-// number of tries for veer calculation
-var tries = 10;
-// useful for veer computation
-var overallDirection = 0;
-// error tolerance for veer computation
-var tolerance = 1;
-
 // drift values for average
 var speedVector = new Array();
 var directionVector = new Array();
-// compass and log values for average
-var compassVector = new Array();
-var logVector = new Array();
+
+// drift direction and speed
+var driftDirection = null, driftSpeed = null;
 
 // decide if use cog or mh
 var heading = function() {
@@ -52,8 +39,8 @@ function reset() {
     // reset values
     speedVector = new Array();
     directionVector = new Array();
-    compassVector = new Array();
-    logVector = new Array();
+    driftDirection = null;
+    driftSpeed = null;
 
     usefulTimestamp = -1;
     usog = 0, ucog = 0, umh = 0;
@@ -62,13 +49,8 @@ function reset() {
     lastTimestamp = -1;
     lsog = 0, lcog = 0, lmh = 0;
     lsow = 0, llat = 0.0, llon = 0.0;
-    
-    veer = function(u, l, c) {
-        return false;
-    };
-    left = false;
-    tries = 10;
-    overallDirection = 0;
+
+    resetAngularSpeeds();
 }
 
 function storeUseful() {
@@ -83,45 +65,19 @@ function storeUseful() {
 }
 
 // calculate average from an array of values
+// using weighted average formula
 function computeAverage(array) {
-    var pSum = 0;
-    array.forEach(function(value) {
-        pSum += value;
-    });
-    return Math.fixedDecimals(pSum / array.length, 2);
-}
-
-// determine the veer direction
-function determineVeer() {
-    // decide in wich direction the boat 
-    // is turning
-    if(tries > 0) {
-        overallDirection += uheading() - heading();
-
-        tries -= 1;
-
-        setTimeout(determineVeer, delay);
-    } else {
-        console.log((overallDirection/10));
-
-        if(overallDirection/10 > tolerance) {
-            left = true;
-            veer = function(u, l, c) {
-                return u < l && u >= c;
-            }
-            console.log('\nTurning left');
-        } else if(overallDirection/10 < -tolerance) {
-            left = false;
-            veer = function(u, l, c) {
-                return u > l && u <= c;
-            }
-            console.log('\nTurning right');
-        } else {
-            stopDriftTest(true);
-            left = false;
-            console.log('\nNot turning');
-        }
+    var steps = 2;
+    var weight = Math.pow(steps, array.length - 1);
+    var xSum = 0, pSum = 0;
+    
+    for(var i = 0; i < array.length; i++) {
+        xSum += array[i] * weight;
+        pSum += weight;
+        weight /= steps;
     }
+
+    return Math.fixedDecimals(xSum / pSum, 2);
 }
 
 // manage the drift calculation
@@ -130,7 +86,11 @@ function driftCalcUpdater() {
         if(dataTimestamp > lastTimestamp) {
             if(usefulTimestamp == -1) {
                 storeUseful()
-                $('#rh').text(uheading() + '°' + label);
+                domRh.text(uheading() + '°');
+
+                previousHeading = heading();
+                setTimeout(veerMonitor, timeout);
+                // constantly get the veer direction
                 determineVeer();
             } else {
                 // decide if the new data is useful or not
@@ -143,12 +103,15 @@ function driftCalcUpdater() {
                     directionVector.push(direc);
 
                     storeUseful();
-                    updateDriftInfo(speed, Math.trunc(direc));
+                    updateDriftInfo(speed, Math.trunc(direc) + '°');
                 }
             }
 
             // store the data as last if valid
-            //if(left == null || (left && cog <= lcog) || (!left && cog >= lcog)) {
+            // (not corrupted by waves action)
+            var diff = heading() - lheading();
+            if(avg == null || Math.sign(diff) == Math.sign(avg)
+                || avg == 0 || Math.abs(diff) > 270) {
                 lastTimestamp = dataTimestamp;
                 lsog = sog;
                 lcog = cog;
@@ -156,47 +119,39 @@ function driftCalcUpdater() {
                 lsow = sow;
                 llat = lat;
                 llon = lon;
-            //} 
+            } 
         }
 
         // repeat the survey
         setTimeout(driftCalcUpdater, delay);
-    } else {
-        // calculate average value
+    } else if(!process_aborted) {
+        domLeft.css({
+            "background-image":"none"
+        });
+
         if(speedVector.length > 0 && directionVector.length > 0) {
+            // calculate average value
             driftSpeed = computeAverage(speedVector);
             driftDirection = computeAverage(directionVector);
 
-            updateDriftInfo(driftSpeed, Math.trunc(driftDirection));
-        }
-    }
-}
+            updateDriftInfo(driftSpeed, Math.trunc(driftDirection) + '°');
 
-// manage corrections calculation
-function correctionCalcUpdater() {
-    if(started) {
-        // compute cog and sog clean data
-        var cleanSpeed = getCleanSpeed(cog, sog, driftDirection, driftSpeed);
-        var cleanDirection = getCleanDirection(cog, driftDirection);
-
-        // compute corrections
-        var cd = Math.fixedDecimals(mh - cleanDirection, 2),
-            ld = Math.fixedDecimals(sow - cleanSpeed, 2);
-
-        compassVector.push(cd);
-        logVector.push(ld);
-
-        updateDeltaInfo(cd, ld);
-
-        // repeat the survey every 'factor' seconds
-        setTimeout(correctionCalcUpdater, delay*factor);
-    } else {
-        // calculate average value
-        if(compassVector.length > 0 && logVector.length > 0) {
-            compassDelta = computeAverage(compassVector);
-            logDelta = computeAverage(logVector);
-
-            updateDeltaInfo(compassDelta, logDelta);
+            if(speedVector.length >= 2 && speedVector.length <= 4 && 
+                directionVector.length >= 2 && directionVector.length <= 4) {  
+                // send data to Argos
+                sendDriftData(driftDirection, driftSpeed);
+            } else {
+                // data count not in safe range: user decide if use data anyway
+                // or get rid of them and repeat the test
+                domWorning.attr("hidden", false);
+                $("#datacount").text(Math.min(speedVector.length, directionVector.length));
+                $("#btnsend").on("click", function() {
+                    // send data to Argos
+                    sendDriftData(driftDirection, driftSpeed);
+    
+                    domWorning.attr("hidden", true);
+                });
+            }
         }
     }
 }

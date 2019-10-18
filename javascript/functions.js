@@ -1,4 +1,4 @@
-var RADIUS = 6372.795477598 // earth radius
+const RADIUS = 6372.795477598 // earth radius
 
 // degrees to radians
 Math.radians = function(deg){
@@ -51,7 +51,7 @@ function getDriftSpeed(latA, lonA, tsA, latB, lonB, tsB) {
     var dT = (tsB - tsA) / 1000;
     var speed = (dist / dT) * 3.6;
 
-    return Math.fixedDecimals(speed * 0.539957, 2);
+    return Math.fixedDecimals(speed * 0.539957, 1);
 }
 
 // calculate the drift heading
@@ -72,52 +72,4 @@ function getDriftDirection(latA, lonA, latB, lonB) {
     } else {
         return Math.fixedDecimals(360 + Math.degrees(dirRad), 2);
     }
-}
-
-// calculate the boat heading minus the drift
-function getCleanDirection(cog, ch) {
-    /*
-        cog : actual direction from GPS
-        ch  : direction of the drift
-    */
-
-    // invert the direction of the drift
-    if(ch - 180 >= 0) {
-        var chi = ch - 180;
-    } else {
-        var chi = ch + 180;
-    }
-
-    // vector sum of GPS movement and -drift
-    var sx = (Math.cos(Math.radians(cog))) + (Math.cos(Math.radians(chi)));
-    var sy = (Math.sin(Math.radians(cog))) + (Math.sin(Math.radians(chi)));
-
-    if (sy >= 0) {
-        return Math.fixedDecimals(Math.degrees(Math.acos(sx)), 2);
-    } else {
-        return Math.fixedDecimals(360 - Math.degrees(Math.acos(sx)), 2);
-    }
-}
-
-// calculate the boat speed minus the drift
-function getCleanSpeed(cog, sog, ch, cs) {
-    /*
-        cog : actual direction from GPS
-        sog : actual speed from GPS
-        ch  : direction of the drift
-        cs  : speed of the drift
-    */
-
-    // invert the direction of the drift
-    if(ch - 180 >= 0) {
-        var chi = ch - 180;
-    } else {
-        var chi = ch + 180;
-    }
-
-    // vector sum of GPS movement and -drift
-    var sx = (sog*Math.cos(Math.radians(cog))) + (cs*Math.cos(Math.radians(chi)));
-    var sy = (sog*Math.sin(Math.radians(cog))) + (cs*Math.sin(Math.radians(chi)));
-
-    return Math.fixedDecimals(Math.sqrt((sx * sx) + (sy * sy)), 2);
 }

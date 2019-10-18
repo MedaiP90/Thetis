@@ -4,27 +4,24 @@
 
 // test state
 var started = false;
+var process_aborted = false;
 // decide if use gps heading or
 // magnetic heading
 var gps = true;
-var label = ' (cog)';
 
 // relevant data
 var dataTimestamp = 0;
 var sog = 0, cog = 0, mh = 0, sow = 0,
     lat = 0.0, lon = 0.0;
 
-var delay = 1000, factor = 5;
+const delay = 1000;
 
-// drift direction and speed
-var driftDirection = null, driftSpeed = null;
-// compass and log corrections
-var compassDelta = null, logDelta = null;
-
-/* cog and sog are considered without drift
- * cog = mh - compassDelta
- * sog = sow - logDelta
+/*
+ * Dom elements for faster access
  */
+var domCs, domCh, domAh, domDrift,
+    domRh, domMsg, domAborted, 
+    domGps, domLeft, domWorning;
 
 //////////////////////////////////////
 
@@ -34,90 +31,110 @@ var compassDelta = null, logDelta = null;
 
 // update the drift fields
 function updateDriftInfo(speed, direc) {
-    $('#cs').text(speed);
-    compass(direc, 'ch', '.left.top', 0);
-}
-
-// update the compass and log fields
-function updateDeltaInfo(compass, log) {
-    $('#mhc').text(compass);
-    $('#sowc').text(log);
-}
-
-// actual heading update
-function refreshInformations() {
-    $('#ah').text(heading() + '°' + label);
+    domCs.text(speed);
+    domCh.text(direc);
 }
 
 // stop test
-function stopDriftTest(aborted) {
+function stopDriftTest(aborted, msg) {
+    process_aborted = aborted;
     console.log("drift check stopped");
-    started = !started;
-    $('#drift').text('FIND DRIFT');
+    started = false;
+    domDrift.text('FIND DRIFT');
+    domRh.text('--');
     // activate the correction button if
     // operation not aborted
-    if(!aborted)
-        $('#correction').prop("disabled",false);
-}
-
-function stopDeltaTest() {
-    console.log("correction check stopped");
-    started = !started;
-    $('#correction').text('FIND DELTA');
-    // activate the drift button
-    $('#drift').prop("disabled",false);
+    if(aborted) {
+        // make aborted message visible
+        domMsg.text(msg);
+        domAborted.attr("hidden", false);
+        // drop unaccurate results
+        driftDirection = null, driftSpeed = null;
+        updateDriftInfo('--', '--');
+    } 
 }
 
 // verify if checkbox is checked
 function checkChecked() {
-    gps = $('#gpsh').prop('checked');
-    if(gps) 
-        label = ' (cog)';
-    else
-        label = ' (mh)';
+    gps = domGps.prop('checked');
+}
+
+// load usefull dom element for
+// further use
+function loadElements() {
+    domCs = $('#cs');
+    domCh = $('#ch');
+    domAh = $('#ah');
+    domDrift = $('#drift');
+    domRh = $('#rh');
+    domMsg = $('#abortedmsg');
+    domAborted = $('#aborted');
+    domGps = $('#gpsh');
+    domLeft = $(".left_alt");
+    domWorning = $("#worning");
 }
 
 //////////////////////////////////////
 
+// find get parameters from url
+// (used for passing the fast forward time)
+/*function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = { }, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}*/
+
 (function($){
     $(document).ready(function(){
+        loadElements();
+
+        domCh.text('--');
+
+        //var query = getQueryParams(document.location.search);
+
+        // start updating data 
+        // fast forwarding with get parameter 't'
+        /*domDrift.prop("disabled",true);
+        if(query.t != undefined)
+            jumpTo = query.t;
+        else
+            jumpTo = 0;*/
+          
+        updatingData();
+
         // add listeners to buttons
-        $('#drift').on("click", findDrift);
-        $('#correction').on("click", findCorrections);
-        $('#gpsh').on("click", checkChecked);
+        domDrift.on("click", findDrift);
+        domGps.on("click", checkChecked);
+        $('#abortedbtn').on("click", function() {
+            domAborted.attr("hidden", true);
+        });
+        $('#btncancel').on("click", function() {
+            domWorning.attr("hidden", true);
+            // drop unaccurate results
+            driftDirection = null, driftSpeed = null;
+            updateDriftInfo('--', '--');
+        });
     });
 
     // drift button clicked
     function findDrift() {
         if(!started) {
             console.log("drift check started");
-            $('#correction').prop("disabled",true);
-            $('#drift').text('STOP');
-            started = !started;
+            domDrift.text('STOP');
+            started = true;
+            process_aborted = false;
             // calculate the drift
             reset();
+            updateDriftInfo('--', '--');
             driftCalcUpdater();
         } else {
-            stopDriftTest(false);
-        }
-    }
-
-    // delta button clicked
-    function findCorrections() {
-        if(!started) {
-            console.log("correction check started");
-            $('#drift').prop("disabled",true);
-            $('#correction').text('STOP');
-            started = !started;
-            // calculate corrections
-            if(driftSpeed != null && driftDirection != null) {
-                reset();
-                correctionCalcUpdater();
-            } else {
-                stopDeltaTest();
-            }
-        } else {
-            stopDeltaTest();
+            stopDriftTest(false, "");
         }
     }
 })(jQuery);

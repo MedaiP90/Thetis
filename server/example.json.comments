@@ -15,7 +15,11 @@
   "sogp" : -100,
   "togp" : -100,
  "data1" : -100,
- "data2" : 1.78
+ "data2" : 1.78,
+ "drifth" : -1.0, // drift heading (-1 if not calculated yet)
+ "drifts" : -1.0, // drift speed (-1 if not calculated yet)
+ "deltas" : 0.00,
+ "deltab" : 0.00
 }
 
 /* Subtracting the result of the current calculation (gained from lat and lon)
